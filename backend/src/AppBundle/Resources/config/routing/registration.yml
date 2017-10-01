@@ -1,0 +1,7 @@
+registration_create:
+    path: /create
+    defaults: { _controller: "AppBundle:Registration:create" }
+
+registration_read:
+    path: /read/{id}
+    defaults: { _controller: "AppBundle:Registration:read" }

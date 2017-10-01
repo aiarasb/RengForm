@@ -1,0 +1,47 @@
+AppBundle\Entity\Lecture:
+    repositoryClass: AppBundle\Doctrine\Repository\LectureRepository
+    type: entity
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        description:
+            type: string
+            length: 65535
+            nullable: true
+        place:
+            type: string
+            length: 255
+            nullable: true
+        startTime:
+            type: time
+            nullable: true
+        endTime:
+            type: time
+            nullable: true
+        capacity:
+            type: integer
+            nullable: true
+        entries:
+            type: integer
+            options:
+                default: 0
+        created:
+            type: datetime
+    manyToOne:
+        category:
+            targetEntity: AppBundle\Entity\Category
+            joinColumn:
+                name: categoryId
+                referencedColumnName: id
+        form:
+            targetEntity: AppBundle\Entity\Form
+            joinColumn:
+                name: formId
+                referencedColumnName: id

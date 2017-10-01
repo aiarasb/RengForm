@@ -1,0 +1,25 @@
+AppBundle\Entity\User:
+    repositoryClass: AppBundle\Doctrine\Repository\UserRepository
+    type: entity
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        username:
+            type: string
+            length: 64
+        password:
+            type: string
+            length: 64
+        email:
+            type: string
+            length: 64
+        created:
+            type: datetime
+    oneToMany:
+        events:
+            targetEntity: AppBundle\Entity\Event
+            mappedBy: owner

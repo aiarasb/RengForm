@@ -1,0 +1,29 @@
+AppBundle\Entity\Category:
+    repositoryClass: AppBundle\Doctrine\Repository\CategoryRepository
+    type: entity
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        description:
+            type: string
+            length: 65535
+            nullable: true
+        created:
+            type: datetime
+    manyToOne:
+        event:
+            targetEntity: AppBundle\Entity\Event
+            joinColumn:
+                name: eventId
+                referencedColumnName: id
+    oneToMany:
+        lectures:
+            targetEntity: AppBundle\Entity\Lecture
+            mappedBy: category

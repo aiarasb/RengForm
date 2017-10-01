@@ -1,0 +1,29 @@
+AppBundle\Entity\Form:
+    repositoryClass: AppBundle\Doctrine\Repository\FormRepository
+    type: entity
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 255
+        description:
+            type: string
+            length: 65535
+            nullable: true
+        config:
+            type: json_array
+            length: 65535
+            nullable: true
+        created:
+            type: datetime
+    manyToOne:
+        owner:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: userId
+                referencedColumnName: id

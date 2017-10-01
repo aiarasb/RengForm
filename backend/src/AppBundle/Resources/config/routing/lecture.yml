@@ -1,0 +1,15 @@
+lecture_create:
+    path: /create
+    defaults: { _controller: "AppBundle:Lecture:create" }
+
+lecture_read:
+    path: /read/{id}
+    defaults: { _controller: "AppBundle:Lecture:read" }
+
+lecture_update:
+    path: /update/{id}
+    defaults: { _controller: "AppBundle:Lecture:update" }
+
+lecture_delete:
+    path: /delete/{id}
+    defaults: { _controller: "AppBundle:Lecture:delete" }

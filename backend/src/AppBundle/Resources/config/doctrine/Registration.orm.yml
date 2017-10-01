@@ -1,0 +1,22 @@
+AppBundle\Entity\Registration:
+    repositoryClass: AppBundle\Doctrine\Repository\RegistrationRepository
+    type: entity
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        data:
+            type: json_array
+            length: 65535
+            nullable: true
+        created:
+            type: datetime
+    manyToOne:
+        lecture:
+            targetEntity: AppBundle\Entity\Lecture
+            joinColumn:
+                name: lectureId
+                referencedColumnName: id

@@ -1,0 +1,15 @@
+form_create:
+    path: /create
+    defaults: { _controller: "AppBundle:Form:create" }
+
+form_read:
+    path: /read/{id}
+    defaults: { _controller: "AppBundle:Form:read" }
+
+form_update:
+    path: /update/{id}
+    defaults: { _controller: "AppBundle:Form:update" }
+
+form_delete:
+    path: /delete/{id}
+    defaults: { _controller: "AppBundle:Form:delete" }

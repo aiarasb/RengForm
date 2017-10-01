@@ -1,0 +1,15 @@
+category_create:
+    path: /create
+    defaults: { _controller: "AppBundle:Category:create" }
+
+category_read:
+    path: /read/{id}
+    defaults: { _controller: "AppBundle:Category:read" }
+
+category_update:
+    path: /update/{id}
+    defaults: { _controller: "AppBundle:Category:update" }
+
+category_delete:
+    path: /delete/{id}
+    defaults: { _controller: "AppBundle:Category:delete" }
