@@ -22,7 +22,33 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
      */
     public function createAction(Request $request, $id)
     {
-        return new JsonResponse(['status' => 'created']);
+        $response = new JsonApiResponseContent();
+
+        if (null === $id) {
+            //TODO: create
+        } else {
+            $response->addError(sprintf("You can not create %s with client provided ID", ucfirst(static::TYPE)));
+            $object = $this->getRepository()->find($id);
+
+            if (null === $object) {
+                $response->addError(
+                    sprintf('%s not found', ucfirst(static::TYPE)),
+                    [
+                        'id' => $id
+                    ]
+                );
+            } else {
+                $response->addError(
+                    sprintf('%s with ID %d already exists', ucfirst(static::TYPE), $id),
+                    [
+                        'id' => $id
+                    ],
+                    409
+                );
+            }
+        }
+
+        return $response->getJsonResponse();
     }
 
     /**
