@@ -17,3 +17,8 @@ category_delete:
     path: /{id}
     methods: DELETE
     defaults: { _controller: "AppBundle:Category:delete" }
+
+category_all:
+    path: /
+    methods: GET
+    defaults: { _controller: "AppBundle:Category:getAll" }

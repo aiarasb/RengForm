@@ -22,7 +22,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
      */
     public function createAction(Request $request)
     {
-        return new JsonResponse('created');
+        return new JsonResponse(['status' => 'created']);
     }
 
     /**
@@ -58,7 +58,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
      */
     public function updateAction(Request $request, $id)
     {
-        return new JsonResponse('updated');
+        return new JsonResponse(['status' => 'updated']);
     }
 
     /**
@@ -66,7 +66,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
      */
     public function deleteAction(Request $request, $id)
     {
-        return new JsonResponse('deleted');
+        return new JsonResponse(['status' => 'deleted']);
     }
 
     /**
