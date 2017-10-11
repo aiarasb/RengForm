@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\CRUDEntityInterface;
 use AppBundle\Service\Api\ApiObjectFactory;
 use AppBundle\Service\Api\JsonApiResponseContent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,10 +18,9 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
     const TYPE = 'undefined';
 
     /**
-     * @param Request $request
-     * @return JsonResponse
+     * @inheritdoc
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, $id)
     {
         return new JsonResponse(['status' => 'created']);
     }
@@ -31,23 +31,36 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
     public function readAction(Request $request, $id)
     {
         $response = new JsonApiResponseContent();
-        $user = $this->getRepository()->find($id);
 
-        if (null !== $user) {
-            $data = $this->transformData(
-                $user->serialize(),
-                static::ID_FIELD_NAME,
-                static::TYPE
+        if (null === $id) {
+            $rawUsers = array_map(
+                function ($object) {
+                    /** @var CRUDEntityInterface $object */
+                    return $object->serialize();
+                },
+                $this->getRepository()->findAll()
             );
 
-            $response->setData($data);
+            $response->setData($rawUsers);
         } else {
-            $response->addError(
-                sprintf('%s not found', ucfirst(static::TYPE)),
-                [
-                    'id' => $id
-                ]
-            );
+            $user = $this->getRepository()->find($id);
+
+            if (null !== $user) {
+                $data = $this->transformData(
+                    $user->serialize(),
+                    static::ID_FIELD_NAME,
+                    static::TYPE
+                );
+
+                $response->setData($data);
+            } else {
+                $response->addError(
+                    sprintf('%s not found', ucfirst(static::TYPE)),
+                    [
+                        'id' => $id
+                    ]
+                );
+            }
         }
 
         return $response->getJsonResponse();

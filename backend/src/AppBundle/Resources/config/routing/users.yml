@@ -1,0 +1,19 @@
+user_create:
+    path: /{id}
+    methods: POST
+    defaults: { _controller: "AppBundle:User:create", id: null }
+
+user_read:
+    path: /{id}
+    methods: GET
+    defaults: { _controller: "AppBundle:User:read", id: null }
+
+user_update:
+    path: /{id}
+    methods: PUT
+    defaults: { _controller: "AppBundle:User:update", id: null }
+
+user_delete:
+    path: /{id}
+    methods: DELETE
+    defaults: { _controller: "AppBundle:User:delete", id: null }

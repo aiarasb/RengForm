@@ -1,0 +1,19 @@
+event_create:
+    path: /{id}
+    methods: POST
+    defaults: { _controller: "AppBundle:Event:create", id: null }
+
+event_read:
+    path: /{id}
+    methods: GET
+    defaults: { _controller: "AppBundle:Event:read", id: null }
+
+event_update:
+    path: /{id}
+    methods: PUT
+    defaults: { _controller: "AppBundle:Event:update", id: null }
+
+event_delete:
+    path: /{id}
+    methods: DELETE
+    defaults: { _controller: "AppBundle:Event:delete", id: null }

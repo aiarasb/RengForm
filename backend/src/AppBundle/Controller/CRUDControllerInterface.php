@@ -12,9 +12,10 @@ interface CRUDControllerInterface
 {
     /**
      * @param Request $request
+     * @param mixed $id
      * @return JsonResponse
      */
-    public function createAction(Request $request);
+    public function createAction(Request $request, $id);
 
     /**
      * @param Request $request

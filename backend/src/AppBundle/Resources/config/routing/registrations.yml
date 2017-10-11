@@ -1,0 +1,9 @@
+registration_create:
+    path: /{id}
+    methods: POST
+    defaults: { _controller: "AppBundle:Registration:create", id: null }
+
+registration_read:
+    path: /{id}
+    methods: GET
+    defaults: { _controller: "AppBundle:Registration:read", id: null }

@@ -16,7 +16,7 @@ class JsonApiResponseContent
     private $data = [];
 
     /** @var int */
-    private $errorStatusCode = 400;
+    private $errorStatusCode = 404;
 
     /** @var int */
     private $successStatusCode = 200;

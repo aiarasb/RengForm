@@ -1,0 +1,19 @@
+form_create:
+    path: /{id}
+    methods: POST
+    defaults: { _controller: "AppBundle:Form:create", id: null }
+
+form_read:
+    path: /{id}
+    methods: GET
+    defaults: { _controller: "AppBundle:Form:read", id: null }
+
+form_update:
+    path: /{id}
+    methods: PUT
+    defaults: { _controller: "AppBundle:Form:update", id: null }
+
+form_delete:
+    path: /{id}
+    methods: DELETE
+    defaults: { _controller: "AppBundle:Form:delete", id: null }
