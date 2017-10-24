@@ -40,10 +40,11 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
                     'Location',
                     $this->generateUrl(static::TYPE . '_read', ['id' => $object->getId()])
                 );
+                $response->setData($object->dump());
             } else {
                 $response->setStatusCode(400);
                 $response->setData([
-                    'message' => 'Empty request.'
+                    'message' => 'Empty request.',
                 ]);
             }
         } else {
@@ -115,7 +116,34 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
      */
     public function deleteAction(Request $request, $id)
     {
-        return new JsonResponse(['status' => 'deleted']);
+        $response = new JsonResponse();
+        $response->setStatusCode(200);
+
+        if (null === $id) {
+            $response->setStatusCode(405);
+            $response->setData([
+                'message' => "You can't delete all collection.",
+            ]);
+        } else {
+            $object = $this->getRepository()->find($id);
+
+            if ($object === null) {
+                $response->setStatusCode(404);
+                $response->setData([
+                    'message' => sprintf('%s not found.', ucfirst(static::TYPE)),
+                    'data'    => ['id' => $id],
+                ]);
+            } else {
+                $this->getDoctrine()->getManager()->remove($object);
+                $this->getDoctrine()->getManager()->flush();
+
+                $response->setData([
+                    'message' => sprintf('%s with ID %d removed.', ucfirst(static::TYPE), $id)
+                ]);
+            }
+        }
+
+        return $response;
     }
 
     /**
