@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 /**
  * Registration
  */
-class Registration implements CRUDEntityInterface
+class Registration extends CRUDEntity
 {
     /**
      * @var integer
@@ -112,7 +112,7 @@ class Registration implements CRUDEntityInterface
     /**
      * @return array
      */
-    public function serialize()
+    public function dump()
     {
         $data = [
             'id'      => $this->id,

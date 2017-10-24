@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 /**
  * User
  */
-class User implements CRUDEntityInterface
+class User extends CRUDEntity
 {
     /**
      * @var integer
@@ -188,7 +188,7 @@ class User implements CRUDEntityInterface
     /**
      * @return array
      */
-    public function serialize()
+    public function dump()
     {
         $data = [
             'id'       => $this->id,

@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 /**
  * Lecture
  */
-class Lecture implements CRUDEntityInterface
+class Lecture extends CRUDEntity
 {
     /**
      * @var integer
@@ -315,7 +315,7 @@ class Lecture implements CRUDEntityInterface
     /**
      * @return array
      */
-    public function serialize()
+    public function dump()
     {
         $data = [
             'id'          => $this->id,
@@ -330,5 +330,16 @@ class Lecture implements CRUDEntityInterface
         ];
 
         return $data;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function unserialize($rawData)
+    {
+        parent::unserialize($rawData);
+
+        $this->startTime = new \DateTime($this->startTime);
+        $this->endTime = new \DateTime($this->endTime);
     }
 }

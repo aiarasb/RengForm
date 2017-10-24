@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 /**
  * Category
  */
-class Category implements CRUDEntityInterface
+class Category extends CRUDEntity
 {
     /**
      * @var integer
@@ -186,9 +186,9 @@ class Category implements CRUDEntityInterface
     }
 
     /**
-     * @return array
+     * @inh
      */
-    public function serialize()
+    public function dump()
     {
         $data = [
             'id'          => $this->id,

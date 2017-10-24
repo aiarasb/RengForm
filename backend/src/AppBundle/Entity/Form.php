@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 /**
  * Form
  */
-class Form implements CRUDEntityInterface
+class Form extends CRUDEntity
 {
     /**
      * @var integer
@@ -170,7 +170,7 @@ class Form implements CRUDEntityInterface
     /**
      * @return array
      */
-    public function serialize()
+    public function dump()
     {
         $data = [
             'id'          => $this->id,

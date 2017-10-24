@@ -2,10 +2,12 @@
 
 namespace AppBundle\Entity;
 
+use Symfony\Component\Validator\Constraints\DateTime;
+
 /**
  * Event
  */
-class Event implements CRUDEntityInterface
+class Event extends CRUDEntity
 {
     /**
      * @var integer
@@ -246,7 +248,7 @@ class Event implements CRUDEntityInterface
     /**
      * @return array
      */
-    public function serialize()
+    public function dump()
     {
         $data = [
             'id'          => $this->id,
@@ -258,5 +260,15 @@ class Event implements CRUDEntityInterface
         ];
 
         return $data;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function unserialize($rawData)
+    {
+        parent::unserialize($rawData);
+
+        $this->date = new DateTime($this->date);
     }
 }

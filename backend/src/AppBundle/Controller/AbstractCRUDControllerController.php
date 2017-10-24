@@ -2,9 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\CRUDEntityInterface;
-use AppBundle\Service\Api\ApiObjectFactory;
-use AppBundle\Service\Api\JsonApiResponseContent;
+use AppBundle\Entity\CRUDEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,33 +20,51 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
      */
     public function createAction(Request $request, $id)
     {
-        $response = new JsonApiResponseContent();
+        $response = new JsonResponse();
+        $response->setStatusCode(201);
 
         if (null === $id) {
-            //TODO: create
+            $className = $this->getRepository()->getClassName();
+            /** @var CRUDEntity $object */
+            $object = new $className();
+            $data = $request->getContent();
+            if ($data !== '') {
+                $object->unserialize($data);
+                $object->setCreated(new \DateTime());
+
+                //TODO: validate
+
+                $this->getDoctrine()->getManager()->persist($object);
+                $this->getDoctrine()->getManager()->flush();
+                $response->headers->set(
+                    'Location',
+                    $this->generateUrl(static::TYPE . '_read', ['id' => $object->getId()])
+                );
+            } else {
+                $response->setStatusCode(400);
+                $response->setData([
+                    'message' => 'Empty request.'
+                ]);
+            }
         } else {
-            $response->addError(sprintf("You can not create %s with client provided ID", ucfirst(static::TYPE)));
+            $message = sprintf("You can not create %s with client provided ID.", ucfirst(static::TYPE));
             $object = $this->getRepository()->find($id);
 
             if (null === $object) {
-                $response->addError(
-                    sprintf('%s not found', ucfirst(static::TYPE)),
-                    [
-                        'id' => $id
-                    ]
-                );
+                $response->setStatusCode(404);
+                $message .= " " . sprintf('%s not found.', ucfirst(static::TYPE));
             } else {
-                $response->addError(
-                    sprintf('%s with ID %d already exists', ucfirst(static::TYPE), $id),
-                    [
-                        'id' => $id
-                    ],
-                    409
-                );
+                $response->setStatusCode(409);
+                $message .= " " . sprintf('%s with ID %d already exists.', ucfirst(static::TYPE), $id);
             }
+
+            $response->setData([
+                'message' => $message,
+                'data'    => ['id' => $id],
+            ]);
         }
 
-        return $response->getJsonResponse();
+        return $response;
     }
 
     /**
@@ -56,13 +72,14 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
      */
     public function readAction(Request $request, $id)
     {
-        $response = new JsonApiResponseContent();
+        $response = new JsonResponse();
+        $response->setStatusCode(200);
 
         if (null === $id) {
             $rawUsers = array_map(
                 function ($object) {
-                    /** @var CRUDEntityInterface $object */
-                    return $object->serialize();
+                    /** @var CRUDEntity $object */
+                    return $object->dump();
                 },
                 $this->getRepository()->findAll()
             );
@@ -72,24 +89,17 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
             $user = $this->getRepository()->find($id);
 
             if (null !== $user) {
-                $data = $this->transformData(
-                    $user->serialize(),
-                    static::ID_FIELD_NAME,
-                    static::TYPE
-                );
-
-                $response->setData($data);
+                $response->setData($user->dump());
             } else {
-                $response->addError(
-                    sprintf('%s not found', ucfirst(static::TYPE)),
-                    [
-                        'id' => $id
-                    ]
-                );
+                $response->setStatusCode(404);
+                $response->setData([
+                    'message' => sprintf('%s not found.', ucfirst(static::TYPE)),
+                    'data'    => ['id' => $id],
+                ]);
             }
         }
 
-        return $response->getJsonResponse();
+        return $response;
     }
 
     /**
@@ -106,19 +116,6 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
     public function deleteAction(Request $request, $id)
     {
         return new JsonResponse(['status' => 'deleted']);
-    }
-
-    /**
-     * @param array  $data
-     * @param string $idFieldName
-     * @param string $type
-     * @return array
-     */
-    protected function transformData($data, $idFieldName, $type)
-    {
-        $apiObjectFactory = new ApiObjectFactory($data, $idFieldName, $type);
-
-        return $apiObjectFactory->getApiObject();
     }
 
     /**
