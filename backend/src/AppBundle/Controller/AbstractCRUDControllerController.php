@@ -20,8 +20,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
      */
     public function createAction(Request $request, $id)
     {
-        $response = new JsonResponse();
-        $response->setStatusCode(201);
+        $response = new JsonResponse(null, 201);
 
         if (null === $id) {
             $className = $this->getRepository()->getClassName();
@@ -40,29 +39,17 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
                     'Location',
                     $this->generateUrl(static::TYPE . '_read', ['id' => $object->getId()])
                 );
-                $response->setData($object->dump());
             } else {
                 $response->setStatusCode(400);
-                $response->setData([
-                    'message' => 'Empty request.',
-                ]);
             }
         } else {
-            $message = sprintf("You can not create %s with client provided ID.", ucfirst(static::TYPE));
             $object = $this->getRepository()->find($id);
 
             if (null === $object) {
                 $response->setStatusCode(404);
-                $message .= " " . sprintf('%s not found.', ucfirst(static::TYPE));
             } else {
                 $response->setStatusCode(409);
-                $message .= " " . sprintf('%s with ID %d already exists.', ucfirst(static::TYPE), $id);
             }
-
-            $response->setData([
-                'message' => $message,
-                'data'    => ['id' => $id],
-            ]);
         }
 
         return $response;
@@ -77,7 +64,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
         $response->setStatusCode(200);
 
         if (null === $id) {
-            $rawUsers = array_map(
+            $objects = array_map(
                 function ($object) {
                     /** @var CRUDEntity $object */
                     return $object->dump();
@@ -85,7 +72,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
                 $this->getRepository()->findAll()
             );
 
-            $response->setData($rawUsers);
+            $response->setData($objects);
         } else {
             $user = $this->getRepository()->find($id);
 
@@ -93,10 +80,6 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
                 $response->setData($user->dump());
             } else {
                 $response->setStatusCode(404);
-                $response->setData([
-                    'message' => sprintf('%s not found.', ucfirst(static::TYPE)),
-                    'data'    => ['id' => $id],
-                ]);
             }
         }
 
@@ -108,7 +91,30 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
      */
     public function updateAction(Request $request, $id)
     {
-        return new JsonResponse(['status' => 'updated']);
+        $response =  new JsonResponse();
+
+        if (null !== $id) {
+            /** @var CRUDEntity $object */
+            $object = $this->getRepository()->find($id);
+            $data = $request->getContent();
+
+            if ($object === null) {
+                $response->setStatusCode(404);
+            } elseif (empty($data)) {
+                $response->setStatusCode(400);
+            } else {
+                $object->unserialize($data);
+
+                //TODO: validate
+
+                $this->getDoctrine()->getManager()->merge($object);
+                $this->getDoctrine()->getManager()->flush();
+            }
+        } else {
+            $response->setStatusCode(405);
+        }
+
+        return $response;
     }
 
     /**
@@ -116,30 +122,19 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
      */
     public function deleteAction(Request $request, $id)
     {
-        $response = new JsonResponse();
-        $response->setStatusCode(200);
+        $response = new JsonResponse(null, 204);
 
         if (null === $id) {
             $response->setStatusCode(405);
-            $response->setData([
-                'message' => "You can't delete all collection.",
-            ]);
         } else {
+            /** @var CRUDEntity $object */
             $object = $this->getRepository()->find($id);
 
             if ($object === null) {
                 $response->setStatusCode(404);
-                $response->setData([
-                    'message' => sprintf('%s not found.', ucfirst(static::TYPE)),
-                    'data'    => ['id' => $id],
-                ]);
             } else {
                 $this->getDoctrine()->getManager()->remove($object);
                 $this->getDoctrine()->getManager()->flush();
-
-                $response->setData([
-                    'message' => sprintf('%s with ID %d removed.', ucfirst(static::TYPE), $id)
-                ]);
             }
         }
 
