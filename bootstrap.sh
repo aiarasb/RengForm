@@ -6,6 +6,9 @@ sudo su
 sudo apt-add-repository ppa:ondrej/php
 apt-get update && sudo apt-get upgrade
 
+# install git
+apt-get install git
+
 # install nginx
 apt-get install -y nginx
 service nginx start
@@ -19,7 +22,7 @@ sudo apt-get install -y nodejs
 npm install -g create-react-app
 
 # install php
-apt-get install -y php7.0-cli php7.0-common php7.0-fpm
+apt-get install -y php7.0-cli php7.0-common php7.0-fpm php7.0-xml php7.0-mysql
 
 # install composer globally
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
