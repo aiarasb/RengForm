@@ -3,9 +3,9 @@
 namespace AppBundle\Entity;
 
 /**
- * Class CRUDEntity
+ * Trait CRUDEntityTrait
  */
-abstract class CRUDEntity implements CRUDEntityInterface
+trait CRUDEntityTrait
 {
     /**
      * @inheritdoc
@@ -30,4 +30,9 @@ abstract class CRUDEntity implements CRUDEntityInterface
             $this->{$setter}($value);
         }
     }
+
+    /**
+     * @return array
+     */
+    abstract public function dump();
 }

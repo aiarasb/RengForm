@@ -5,8 +5,10 @@ namespace AppBundle\Entity;
 /**
  * Form
  */
-class Form extends CRUDEntity
+class Form implements CRUDEntityInterface
 {
+    use CRUDEntityTrait;
+
     /**
      * @var integer
      */

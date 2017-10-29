@@ -5,8 +5,10 @@ namespace AppBundle\Entity;
 /**
  * User
  */
-class User extends CRUDEntity
+class User implements CRUDEntityInterface
 {
+    use CRUDEntityTrait;
+
     /**
      * @var integer
      */

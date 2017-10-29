@@ -5,8 +5,12 @@ namespace AppBundle\Entity;
 /**
  * Lecture
  */
-class Lecture extends CRUDEntity
+class Lecture implements CRUDEntityInterface
 {
+    use CRUDEntityTrait {
+        unserialize as protected baseUnserialize;
+    }
+
     /**
      * @var integer
      */
@@ -337,7 +341,7 @@ class Lecture extends CRUDEntity
      */
     public function unserialize($rawData)
     {
-        parent::unserialize($rawData);
+        $this->baseUnserialize($rawData);
 
         $this->startTime = new \DateTime($this->startTime);
         $this->endTime = new \DateTime($this->endTime);

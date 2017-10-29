@@ -7,8 +7,12 @@ use Symfony\Component\Validator\Constraints\DateTime;
 /**
  * Event
  */
-class Event extends CRUDEntity
+class Event implements CRUDEntityInterface
 {
+    use CRUDEntityTrait {
+        unserialize as protected baseUnserialize;
+    }
+
     /**
      * @var integer
      */
@@ -267,7 +271,7 @@ class Event extends CRUDEntity
      */
     public function unserialize($rawData)
     {
-        parent::unserialize($rawData);
+        $this->baseUnserialize($rawData);
 
         $this->date = new DateTime($this->date);
     }

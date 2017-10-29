@@ -5,8 +5,10 @@ namespace AppBundle\Entity;
 /**
  * Registration
  */
-class Registration extends CRUDEntity
+class Registration implements CRUDEntityInterface
 {
+    use CRUDEntityTrait;
+
     /**
      * @var integer
      */
