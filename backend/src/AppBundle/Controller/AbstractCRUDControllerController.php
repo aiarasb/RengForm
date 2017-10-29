@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\CRUDEntity;
+use AppBundle\Entity\CRUDEntityInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
 
         if (null === $id) {
             $className = $this->getRepository()->getClassName();
-            /** @var CRUDEntity $object */
+            /** @var CRUDEntityInterface $object */
             $object = new $className();
             $data = $request->getContent();
             if ($data !== '') {
@@ -66,7 +66,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
         if (null === $id) {
             $objects = array_map(
                 function ($object) {
-                    /** @var CRUDEntity $object */
+                    /** @var CRUDEntityInterface $object */
                     return $object->dump();
                 },
                 $this->getRepository()->findAll()
@@ -94,7 +94,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
         $response =  new JsonResponse();
 
         if (null !== $id) {
-            /** @var CRUDEntity $object */
+            /** @var CRUDEntityInterface $object */
             $object = $this->getRepository()->find($id);
             $data = $request->getContent();
 
@@ -127,7 +127,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
         if (null === $id) {
             $response->setStatusCode(405);
         } else {
-            /** @var CRUDEntity $object */
+            /** @var CRUDEntityInterface $object */
             $object = $this->getRepository()->find($id);
 
             if ($object === null) {

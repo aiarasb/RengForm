@@ -1,5 +1,4 @@
 AppBundle\Entity\Registration:
-    repositoryClass: AppBundle\Doctrine\Repository\RegistrationRepository
     type: entity
     id:
         id:

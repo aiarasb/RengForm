@@ -1,5 +1,4 @@
 AppBundle\Entity\Lecture:
-    repositoryClass: AppBundle\Doctrine\Repository\LectureRepository
     type: entity
     id:
         id:
