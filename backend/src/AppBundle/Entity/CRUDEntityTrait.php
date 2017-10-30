@@ -10,18 +10,7 @@ trait CRUDEntityTrait
     /**
      * @inheritdoc
      */
-    public function serialize()
-    {
-        $dump = $this->dump();
-        $data = json_encode($dump);
-
-        return $data;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function unserialize($rawData)
+    public function unserializeEntity($rawData)
     {
         $data = json_decode($rawData, true);
 

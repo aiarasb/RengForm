@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class Event implements CRUDEntityInterface
 {
     use CRUDEntityTrait {
-        unserialize as protected baseUnserialize;
+        unserializeEntity as protected baseUnserialize;
     }
 
     /**
@@ -269,7 +269,7 @@ class Event implements CRUDEntityInterface
     /**
      * @inheritdoc
      */
-    public function unserialize($rawData)
+    public function unserializeEntity($rawData)
     {
         $this->baseUnserialize($rawData);
 

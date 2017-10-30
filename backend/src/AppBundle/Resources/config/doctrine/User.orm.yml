@@ -9,6 +9,7 @@ AppBundle\Entity\User:
     fields:
         created:
             type: datetime
+            nullable: true
     oneToMany:
         events:
             targetEntity: AppBundle\Entity\Event

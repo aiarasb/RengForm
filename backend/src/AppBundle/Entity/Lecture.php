@@ -8,7 +8,7 @@ namespace AppBundle\Entity;
 class Lecture implements CRUDEntityInterface
 {
     use CRUDEntityTrait {
-        unserialize as protected baseUnserialize;
+        unserializeEntity as protected baseUnserialize;
     }
 
     /**
@@ -339,7 +339,7 @@ class Lecture implements CRUDEntityInterface
     /**
      * @inheritdoc
      */
-    public function unserialize($rawData)
+    public function unserializeEntity($rawData)
     {
         $this->baseUnserialize($rawData);
 

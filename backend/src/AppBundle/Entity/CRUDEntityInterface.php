@@ -25,14 +25,9 @@ interface CRUDEntityInterface
     public function dump();
 
     /**
-     * @return string
-     */
-    public function serialize();
-
-    /**
      * Unserializes an object
      * @param string $rawData
      * @return
      */
-    public function unserialize($rawData);
+    public function unserializeEntity($rawData);
 }

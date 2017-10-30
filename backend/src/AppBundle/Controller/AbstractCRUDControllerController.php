@@ -28,7 +28,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
             $object = new $className();
             $data = $request->getContent();
             if ($data !== '') {
-                $object->unserialize($data);
+                $object->unserializeEntity($data);
                 $object->setCreated(new \DateTime());
 
                 //TODO: validate
@@ -103,7 +103,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
             } elseif (empty($data)) {
                 $response->setStatusCode(400);
             } else {
-                $object->unserialize($data);
+                $object->unserializeEntity($data);
 
                 //TODO: validate
 

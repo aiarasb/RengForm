@@ -1,23 +1,3 @@
-user:
-    resource: '@AppBundle/Resources/config/routing/users.yml'
-    prefix:   /users
-
-event:
-    resource: '@AppBundle/Resources/config/routing/events.yml'
-    prefix:   /events
-
-category:
-    resource: '@AppBundle/Resources/config/routing/categories.yml'
-    prefix:   /categories
-
-lecture:
-    resource: '@AppBundle/Resources/config/routing/lectures.yml'
-    prefix:   /lectures
-
-form:
-    resource: '@AppBundle/Resources/config/routing/forms.yml'
-    prefix:   /forms
-
-registration:
-    resource: '@AppBundle/Resources/config/routing/registrations.yml'
-    prefix:   /registrations
+api:
+    resource: '@AppBundle/Resources/config/routing/api.yml'
+    prefix:   /api
