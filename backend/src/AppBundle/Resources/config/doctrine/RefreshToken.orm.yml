@@ -1,0 +1,19 @@
+AppBundle\Entity\RefreshToken:
+    type: entity
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    manyToOne:
+        client:
+            targetEntity: AppBundle\Entity\Client
+            joinColumn:
+                name: clientId
+                referencedColumnName: id
+        user:
+            targetEntity: AppBundle\Entity\User
+            joinColumn:
+                name: userId
+                referencedColumnName: id
