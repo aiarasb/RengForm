@@ -67,6 +67,11 @@ class Lecture implements CRUDEntityInterface
     private $form;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $registrations;
+
+    /**
      * Get id
      *
      * @return integer
@@ -317,42 +322,6 @@ class Lecture implements CRUDEntityInterface
     }
 
     /**
-     * @return array
-     */
-    public function dump()
-    {
-        $data = [
-            'id'          => $this->id,
-            'title'       => $this->title,
-            'description' => $this->description,
-            'place'       => $this->place,
-            'startTime'   => $this->startTime->format('H:i:s'),
-            'endTime'     => $this->endTime->format('H:i:s'),
-            'capacity'    => $this->capacity,
-            'entries'     => $this->entries,
-            'created'     => $this->created->format('Y-m-d H:i:s'),
-        ];
-
-        return $data;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function unserializeEntity($rawData)
-    {
-        $this->baseUnserialize($rawData);
-
-        $this->startTime = new \DateTime($this->startTime);
-        $this->endTime = new \DateTime($this->endTime);
-    }
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $registrations;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -392,5 +361,38 @@ class Lecture implements CRUDEntityInterface
     public function getRegistrations()
     {
         return $this->registrations;
+    }
+
+    /**
+     * @return array
+     */
+    public function dump()
+    {
+        $data = [
+            'id'          => $this->id,
+            'title'       => $this->title,
+            'description' => $this->description,
+            'place'       => $this->place,
+            'startTime'   => $this->startTime->format('H:i:s'),
+            'endTime'     => $this->endTime->format('H:i:s'),
+            'capacity'    => $this->capacity,
+            'entries'     => $this->entries,
+            'created'     => $this->created->format('Y-m-d H:i:s'),
+        ];
+
+        return $data;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function unserializeEntity($data)
+    {
+        unset($data['categoryId']);
+        unset($data['formId']);
+        $this->baseUnserialize($data);
+
+        $this->startTime = new \DateTime($this->startTime);
+        $this->endTime = new \DateTime($this->endTime);
     }
 }

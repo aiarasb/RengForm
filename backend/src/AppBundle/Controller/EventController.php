@@ -77,4 +77,13 @@ class EventController extends AbstractCRUDControllerController
             $response->setStatusCode(400);
         }
     }
+
+    /**
+     * @param Event $object
+     * @param array  $data
+     */
+    protected function setRelations($object, $data)
+    {
+        $object->setOwner($this->getUser());
+    }
 }

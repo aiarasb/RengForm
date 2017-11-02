@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Doctrine\Repository\RegistrationRepository;
+use AppBundle\Entity\Lecture;
 use AppBundle\Entity\Registration;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -55,5 +56,17 @@ class RegistrationController extends AbstractCRUDControllerController
     protected function getSublist($object, $sublist, $response)
     {
         $response->setStatusCode(400);
+    }
+
+    /**
+     * @param Registration $object
+     * @param array        $data
+     */
+    protected function setRelations($object, $data)
+    {
+        if (isset($data['lectureId'])) {
+            $lecture = $this->getDoctrine()->getRepository(Lecture::class)->find($data['lectureId']);
+            $object->setLecture($lecture);
+        }
     }
 }

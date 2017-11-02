@@ -26,8 +26,8 @@ interface CRUDEntityInterface
 
     /**
      * Unserializes an object
-     * @param string $rawData
+     * @param array $data
      * @return
      */
-    public function unserializeEntity($rawData);
+    public function unserializeEntity($data);
 }

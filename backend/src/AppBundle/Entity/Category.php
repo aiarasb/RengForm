@@ -7,7 +7,9 @@ namespace AppBundle\Entity;
  */
 class Category implements CRUDEntityInterface
 {
-    use CRUDEntityTrait;
+    use CRUDEntityTrait {
+        unserializeEntity as protected baseUnserialize;
+    }
 
     /**
      * @var integer
@@ -200,5 +202,14 @@ class Category implements CRUDEntityInterface
         ];
 
         return $data;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function unserializeEntity($data)
+    {
+        unset($data['eventId']);
+        $this->baseUnserialize($data);
     }
 }

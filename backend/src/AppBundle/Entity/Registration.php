@@ -7,7 +7,9 @@ namespace AppBundle\Entity;
  */
 class Registration implements CRUDEntityInterface
 {
-    use CRUDEntityTrait;
+    use CRUDEntityTrait {
+        unserializeEntity as protected baseUnserialize;
+    }
 
     /**
      * @var integer
@@ -123,5 +125,14 @@ class Registration implements CRUDEntityInterface
         ];
 
         return $data;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function unserializeEntity($data)
+    {
+        unset($data['lectureId']);
+        $this->baseUnserialize($data);
     }
 }

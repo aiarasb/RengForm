@@ -10,10 +10,8 @@ trait CRUDEntityTrait
     /**
      * @inheritdoc
      */
-    public function unserializeEntity($rawData)
+    public function unserializeEntity($data)
     {
-        $data = json_decode($rawData, true);
-
         foreach ($data as $field => $value) {
             $setter = 'set' . ucfirst($field);
             $this->{$setter}($value);

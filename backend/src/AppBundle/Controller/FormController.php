@@ -64,4 +64,13 @@ class FormController extends AbstractCRUDControllerController
     {
         $response->setStatusCode(400);
     }
+
+    /**
+     * @param Form $object
+     * @param array  $data
+     */
+    protected function setRelations($object, $data)
+    {
+        $object->setOwner($this->getUser());
+    }
 }

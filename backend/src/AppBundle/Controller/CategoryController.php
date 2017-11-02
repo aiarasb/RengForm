@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Doctrine\Repository\CategoryRepository;
 use AppBundle\Entity\Category;
+use AppBundle\Entity\Event;
 use AppBundle\Entity\Lecture;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -67,6 +68,18 @@ class CategoryController extends AbstractCRUDControllerController
             $response->setData($objects);
         } else {
             $response->setStatusCode(400);
+        }
+    }
+
+    /**
+     * @param Category $object
+     * @param array  $data
+     */
+    protected function setRelations($object, $data)
+    {
+        if (isset($data['eventId'])) {
+            $event = $this->getDoctrine()->getRepository(Event::class)->find($data['eventId']);
+            $object->setEvent($event);
         }
     }
 }

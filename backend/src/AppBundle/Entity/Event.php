@@ -267,9 +267,9 @@ class Event implements CRUDEntityInterface
     /**
      * @inheritdoc
      */
-    public function unserializeEntity($rawData)
+    public function unserializeEntity($data)
     {
-        $this->baseUnserialize($rawData);
+        $this->baseUnserialize($data);
 
         $this->date = new \DateTime($this->date);
     }

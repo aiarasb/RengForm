@@ -3,6 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Doctrine\Repository\LectureRepository;
+use AppBundle\Entity\Category;
+use AppBundle\Entity\Form;
 use AppBundle\Entity\Lecture;
 use AppBundle\Entity\Registration;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -49,7 +51,7 @@ class LectureController extends AbstractCRUDControllerController
     }
 
     /**
-     * @param Lecture       $object
+     * @param Lecture      $object
      * @param string       $sublist
      * @param JsonResponse $response
      */
@@ -67,6 +69,22 @@ class LectureController extends AbstractCRUDControllerController
             $response->setData($objects);
         } else {
             $response->setStatusCode(400);
+        }
+    }
+
+    /**
+     * @param Lecture $object
+     * @param array   $data
+     */
+    protected function setRelations($object, $data)
+    {
+        if (isset($data['categoryId'])) {
+            $category = $this->getDoctrine()->getRepository(Category::class)->find($data['categoryId']);
+            $object->setCategory($category);
+        }
+        if (isset($data['formId'])) {
+            $form = $this->getDoctrine()->getRepository(Form::class)->find($data['formId']);
+            $object->setForm($form);
         }
     }
 }

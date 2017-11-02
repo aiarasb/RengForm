@@ -27,10 +27,12 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
             $className = $this->getRepository()->getClassName();
             /** @var CRUDEntityInterface $object */
             $object = new $className();
-            $data = $request->getContent();
-            if ($data !== '') {
+            $rawData = $request->getContent();
+            if ($rawData !== '') {
+                $data = json_decode($rawData, true);
                 $object->unserializeEntity($data);
                 $object->setCreated(new \DateTime());
+                $this->setRelations($object, $data);
 
                 //TODO: validate
 
@@ -97,14 +99,16 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
         if (null !== $id) {
             /** @var CRUDEntityInterface $object */
             $object = $this->getRepository()->find($id);
-            $data = $request->getContent();
+            $rawData = $request->getContent();
 
             if ($object === null) {
                 $response->setStatusCode(404);
-            } elseif (empty($data)) {
+            } elseif (empty($rawData)) {
                 $response->setStatusCode(400);
             } elseif ($this->isOwner($object)) {
+                $data = json_decode($rawData, true);
                 $object->unserializeEntity($data);
+                $this->setRelations($object, $data);
 
                 //TODO: validate
 
@@ -163,9 +167,15 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
     abstract protected function getObjectsList($response);
 
     /**
-     * @param object $object
-     * @param string $sublist
+     * @param object       $object
+     * @param string       $sublist
      * @param JsonResponse $response
      */
     abstract protected function getSublist($object, $sublist, $response);
+
+    /**
+     * @param object $object
+     * @param array  $data
+     */
+    abstract protected function setRelations($object, $data);
 }
