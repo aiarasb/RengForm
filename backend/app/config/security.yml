@@ -10,17 +10,9 @@ security:
             id: fos_user.user_provider.username
 
     firewalls:
-        oauth_token:
-            pattern:    ^/oauth/v2/token
+        token:
+            pattern:    ^/token
             security:   false
-
-        oauth_authorize:
-            pattern:    ^/oauth/v2/auth
-            form_login:
-                provider: fos_userbundle
-                check_path: /oauth/v2/auth_login_check
-                login_path: /oauth/v2/auth_login
-            anonymous: true
 
         api:
             pattern:    ^/api
@@ -29,5 +21,4 @@ security:
             anonymous:  false
 
     access_control:
-        - { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }
-        - { path: ^/oauth/v2/auth_login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: [ IS_AUTHENTICATED_FULLY ] }
