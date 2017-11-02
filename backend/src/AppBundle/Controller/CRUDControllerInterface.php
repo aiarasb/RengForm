@@ -12,7 +12,7 @@ interface CRUDControllerInterface
 {
     /**
      * @param Request $request
-     * @param mixed $id
+     * @param mixed   $id
      * @return JsonResponse
      */
     public function createAction(Request $request, $id);
@@ -20,9 +20,10 @@ interface CRUDControllerInterface
     /**
      * @param Request $request
      * @param mixed   $id
+     * @param mixed   $sublist
      * @return JsonResponse
      */
-    public function readAction(Request $request, $id);
+    public function readAction(Request $request, $id, $sublist);
 
     /**
      * @param Request $request

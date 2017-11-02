@@ -2,8 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use Symfony\Component\Validator\Constraints\DateTime;
-
 /**
  * Event
  */
@@ -273,6 +271,6 @@ class Event implements CRUDEntityInterface
     {
         $this->baseUnserialize($rawData);
 
-        $this->date = new DateTime($this->date);
+        $this->date = new \DateTime($this->date);
     }
 }

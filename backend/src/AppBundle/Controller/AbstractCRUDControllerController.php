@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Doctrine\Repository\CRUDRepository;
 use AppBundle\Entity\CRUDEntityInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -58,26 +59,26 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
     /**
      * @inheritdoc
      */
-    public function readAction(Request $request, $id)
+    public function readAction(Request $request, $id, $sublist)
     {
         $response = new JsonResponse();
         $response->setStatusCode(200);
 
         if (null === $id) {
-            $objects = array_map(
-                function ($object) {
-                    /** @var CRUDEntityInterface $object */
-                    return $object->dump();
-                },
-                $this->getRepository()->findAll()
-            );
-
-            $response->setData($objects);
+            $this->getObjectsList($response);
         } else {
-            $user = $this->getRepository()->find($id);
+            $object = $this->getRepository()->find($id);
 
-            if (null !== $user) {
-                $response->setData($user->dump());
+            if (null !== $object) {
+                if ($this->isOwner($object)) {
+                    if (null !== $sublist) {
+                        $this->getSublist($object, $sublist, $response);
+                    } else {
+                        $response->setData($object->dump());
+                    }
+                } else {
+                    $response->setStatusCode(401);
+                }
             } else {
                 $response->setStatusCode(404);
             }
@@ -91,7 +92,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
      */
     public function updateAction(Request $request, $id)
     {
-        $response =  new JsonResponse();
+        $response = new JsonResponse();
 
         if (null !== $id) {
             /** @var CRUDEntityInterface $object */
@@ -102,13 +103,15 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
                 $response->setStatusCode(404);
             } elseif (empty($data)) {
                 $response->setStatusCode(400);
-            } else {
+            } elseif ($this->isOwner($object)) {
                 $object->unserializeEntity($data);
 
                 //TODO: validate
 
                 $this->getDoctrine()->getManager()->merge($object);
                 $this->getDoctrine()->getManager()->flush();
+            } else {
+                $response->setStatusCode(401);
             }
         } else {
             $response->setStatusCode(405);
@@ -132,9 +135,11 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
 
             if ($object === null) {
                 $response->setStatusCode(404);
-            } else {
+            } elseif ($this->isOwner($object)) {
                 $this->getDoctrine()->getManager()->remove($object);
                 $this->getDoctrine()->getManager()->flush();
+            } else {
+                $response->setStatusCode(401);
             }
         }
 
@@ -142,7 +147,25 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
     }
 
     /**
-     * @return \Doctrine\Common\Persistence\ObjectRepository
+     * @return CRUDRepository
      */
     abstract protected function getRepository();
+
+    /**
+     * @param object $object
+     * @return boolean
+     */
+    abstract protected function isOwner($object);
+
+    /**
+     * @param JsonResponse $response
+     */
+    abstract protected function getObjectsList($response);
+
+    /**
+     * @param object $object
+     * @param string $sublist
+     * @param JsonResponse $response
+     */
+    abstract protected function getSublist($object, $sublist, $response);
 }

@@ -4,9 +4,9 @@ lecture_create:
     defaults: { _controller: "AppBundle:Lecture:create", id: null }
 
 lecture_read:
-    path: /{id}
+    path: /{id}/{sublist}
     methods: GET
-    defaults: { _controller: "AppBundle:Lecture:read", id: null }
+    defaults: { _controller: "AppBundle:Lecture:read", id: null, sublist: null }
 
 lecture_update:
     path: /{id}

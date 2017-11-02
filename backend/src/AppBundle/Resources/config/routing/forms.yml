@@ -4,9 +4,9 @@ form_create:
     defaults: { _controller: "AppBundle:Form:create", id: null }
 
 form_read:
-    path: /{id}
+    path: /{id}/{sublist}
     methods: GET
-    defaults: { _controller: "AppBundle:Form:read", id: null }
+    defaults: { _controller: "AppBundle:Form:read", id: null, sublist: null }
 
 form_update:
     path: /{id}

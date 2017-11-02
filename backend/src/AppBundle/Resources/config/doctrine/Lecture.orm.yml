@@ -1,4 +1,5 @@
 AppBundle\Entity\Lecture:
+    repositoryClass: AppBundle\Doctrine\Repository\LectureRepository
     type: entity
     id:
         id:
@@ -44,3 +45,7 @@ AppBundle\Entity\Lecture:
             joinColumn:
                 name: formId
                 referencedColumnName: id
+    oneToMany:
+        registrations:
+            targetEntity: AppBundle\Entity\Registration
+            mappedBy: event

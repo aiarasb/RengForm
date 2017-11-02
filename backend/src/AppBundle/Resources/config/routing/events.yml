@@ -4,9 +4,9 @@ event_create:
     defaults: { _controller: "AppBundle:Event:create", id: null }
 
 event_read:
-    path: /{id}
+    path: /{id}/{sublist}
     methods: GET
-    defaults: { _controller: "AppBundle:Event:read", id: null }
+    defaults: { _controller: "AppBundle:Event:read", id: null, sublist: null }
 
 event_update:
     path: /{id}

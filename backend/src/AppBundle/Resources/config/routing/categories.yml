@@ -4,9 +4,9 @@ category_create:
     defaults: { _controller: "AppBundle:Category:create", id: null }
 
 category_read:
-    path: /{id}
+    path: /{id}/{sublist}
     methods: GET
-    defaults: { _controller: "AppBundle:Category:read", id: null }
+    defaults: { _controller: "AppBundle:Category:read", id: null, sublist: null }
 
 category_update:
     path: /{id}

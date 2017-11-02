@@ -346,4 +346,51 @@ class Lecture implements CRUDEntityInterface
         $this->startTime = new \DateTime($this->startTime);
         $this->endTime = new \DateTime($this->endTime);
     }
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $registrations;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->registrations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add registration
+     *
+     * @param \AppBundle\Entity\Registration $registration
+     *
+     * @return Lecture
+     */
+    public function addRegistration(\AppBundle\Entity\Registration $registration)
+    {
+        $this->registrations[] = $registration;
+
+        return $this;
+    }
+
+    /**
+     * Remove registration
+     *
+     * @param \AppBundle\Entity\Registration $registration
+     */
+    public function removeRegistration(\AppBundle\Entity\Registration $registration)
+    {
+        $this->registrations->removeElement($registration);
+    }
+
+    /**
+     * Get registrations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRegistrations()
+    {
+        return $this->registrations;
+    }
 }

@@ -4,6 +4,6 @@ registration_create:
     defaults: { _controller: "AppBundle:Registration:create", id: null }
 
 registration_read:
-    path: /{id}
+    path: /{id}/{sublist}
     methods: GET
-    defaults: { _controller: "AppBundle:Registration:read", id: null }
+    defaults: { _controller: "AppBundle:Registration:read", id: null, sublist: null }

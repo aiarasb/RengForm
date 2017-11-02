@@ -1,4 +1,5 @@
 AppBundle\Entity\Event:
+    repositoryClass: AppBundle\Doctrine\Repository\EventRepository
     type: entity
     id:
         id:

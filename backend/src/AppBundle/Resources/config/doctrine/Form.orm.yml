@@ -1,4 +1,5 @@
 AppBundle\Entity\Form:
+    repositoryClass: AppBundle\Doctrine\Repository\FormRepository
     type: entity
     id:
         id:
