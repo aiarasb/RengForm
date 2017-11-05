@@ -3,6 +3,11 @@ form_create:
     methods: POST
     defaults: { _controller: "AppBundle:Form:create", id: null }
 
+form_render:
+    path: /{id}/render
+    methods: GET
+    defaults: { _controller: "AppBundle:Form:render" }
+
 form_read:
     path: /{id}/{sublist}
     methods: GET

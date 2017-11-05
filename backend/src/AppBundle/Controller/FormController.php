@@ -4,7 +4,9 @@ namespace AppBundle\Controller;
 
 use AppBundle\Doctrine\Repository\FormRepository;
 use AppBundle\Entity\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class FormController
@@ -12,6 +14,30 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class FormController extends AbstractCRUDControllerController
 {
     const TYPE = 'form';
+
+    /**
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function renderAction($id)
+    {
+        /** @var Form $formEnt */
+        $formEnt = $this->getRepository()->find($id);
+
+        if (null === $formEnt) {
+            return new Response('', 404);
+        }
+
+        /** @var FormInterface $form */
+        $form = $this->get('AppBundle\Service\Form\Builder')->buildForm($formEnt->getConfig());
+
+        return $this->render(
+            '@App/form.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
 
     /**
      * @return FormRepository
@@ -66,8 +92,8 @@ class FormController extends AbstractCRUDControllerController
     }
 
     /**
-     * @param Form $object
-     * @param array  $data
+     * @param Form  $object
+     * @param array $data
      */
     protected function setRelations($object, $data)
     {

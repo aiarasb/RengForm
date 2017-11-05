@@ -7,19 +7,12 @@ use FOS\UserBundle\Model\User as BaseUser;
 /**
  * User
  */
-class User extends BaseUser implements CRUDEntityInterface
+class User extends BaseUser
 {
-    use CRUDEntityTrait;
-
     /**
      * @var integer
      */
     protected $id;
-
-    /**
-     * @var \DateTime
-     */
-    private $created;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -44,30 +37,6 @@ class User extends BaseUser implements CRUDEntityInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     *
-     * @return User
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
     }
 
     /**
@@ -113,7 +82,6 @@ class User extends BaseUser implements CRUDEntityInterface
             'id'       => $this->id,
             'username' => $this->username,
             'email'    => $this->email,
-            'created'  => $this->created->format('Y-m-d H:i:s'),
         ];
 
         return $data;

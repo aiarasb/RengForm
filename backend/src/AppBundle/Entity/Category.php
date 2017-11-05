@@ -199,6 +199,7 @@ class Category implements CRUDEntityInterface
             'title'       => $this->title,
             'description' => $this->description,
             'created'     => $this->created->format('Y-m-d H:i:s'),
+            'event'       => $this->event->dump(),
         ];
 
         return $data;

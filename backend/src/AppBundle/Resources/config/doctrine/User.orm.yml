@@ -6,10 +6,6 @@ AppBundle\Entity\User:
             id: true
             generator:
                 strategy: AUTO
-    fields:
-        created:
-            type: datetime
-            nullable: true
     oneToMany:
         events:
             targetEntity: AppBundle\Entity\Event
