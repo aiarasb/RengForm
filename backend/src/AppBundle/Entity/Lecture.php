@@ -378,6 +378,8 @@ class Lecture implements CRUDEntityInterface
             'capacity'    => $this->capacity,
             'entries'     => $this->entries,
             'created'     => $this->created->format('Y-m-d H:i:s'),
+            'category'    => $this->category->dump(),
+            'form'        => $this->form->dump(),
         ];
 
         return $data;

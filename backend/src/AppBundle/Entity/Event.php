@@ -259,6 +259,7 @@ class Event implements CRUDEntityInterface
             'date'        => $this->date->format('Y-m-d'),
             'place'       => $this->place,
             'created'     => $this->created->format('Y-m-d H:i:s'),
+            'owner'       => $this->owner->dump(),
         ];
 
         return $data;

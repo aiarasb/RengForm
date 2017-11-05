@@ -122,6 +122,7 @@ class Registration implements CRUDEntityInterface
             'id'      => $this->id,
             'data'    => $this->data,
             'created' => $this->created->format('Y-m-d H:i:s'),
+            'lecture' => $this->lecture->dump(),
         ];
 
         return $data;

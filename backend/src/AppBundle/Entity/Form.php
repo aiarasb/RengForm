@@ -180,6 +180,7 @@ class Form implements CRUDEntityInterface
             'description' => $this->description,
             'config'      => $this->config,
             'created'     => $this->created->format('Y-m-d H:i:s'),
+            'owner'       => $this->owner->dump(),
         ];
 
         return $data;
