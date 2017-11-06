@@ -24,25 +24,29 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
         $response = new JsonResponse(null, 201);
 
         if (null === $id) {
-            $className = $this->getRepository()->getClassName();
-            /** @var CRUDEntityInterface $object */
-            $object = new $className();
-            $rawData = $request->getContent();
-            if ($rawData !== '') {
-                $data = json_decode($rawData, true);
-                $object->unserializeEntity($data);
-                $object->setCreated(new \DateTime());
-                $this->setRelations($object, $data);
+            try {
+                $className = $this->getRepository()->getClassName();
+                /** @var CRUDEntityInterface $object */
+                $object = new $className();
+                $rawData = $request->getContent();
+                if ($rawData !== '') {
+                    $data = json_decode($rawData, true);
+                    $object->unserializeEntity($data);
+                    $object->setCreated(new \DateTime());
+                    $this->setRelations($object, $data);
 
-                //TODO: validate
+                    //TODO: validate
 
-                $this->getDoctrine()->getManager()->persist($object);
-                $this->getDoctrine()->getManager()->flush();
-                $response->headers->set(
-                    'Location',
-                    $this->generateUrl(static::TYPE . '_read', ['id' => $object->getId()])
-                );
-            } else {
+                    $this->getDoctrine()->getManager()->persist($object);
+                    $this->getDoctrine()->getManager()->flush();
+                    $response->headers->set(
+                        'Location',
+                        $this->generateUrl(static::TYPE . '_read', ['id' => $object->getId()])
+                    );
+                } else {
+                    $response->setStatusCode(400);
+                }
+            } catch (\Exception $e) {
                 $response->setStatusCode(400);
             }
         } else {
@@ -106,14 +110,19 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
             } elseif (empty($rawData)) {
                 $response->setStatusCode(400);
             } elseif ($this->isOwner($object)) {
-                $data = json_decode($rawData, true);
-                $object->unserializeEntity($data);
-                $this->setRelations($object, $data);
+                try {
+                    $data = json_decode($rawData, true);
+                    $object->unserializeEntity($data);
+                    $this->setRelations($object, $data);
 
-                //TODO: validate
+                    //TODO: validate
 
-                $this->getDoctrine()->getManager()->merge($object);
-                $this->getDoctrine()->getManager()->flush();
+                    $this->getDoctrine()->getManager()->merge($object);
+                    $this->getDoctrine()->getManager()->flush();
+                    $response->setData($object->dump());
+                } catch (\Exception $e) {
+                    $response->setStatusCode(400);
+                }
             } else {
                 $response->setStatusCode(401);
             }

@@ -394,7 +394,11 @@ class Lecture implements CRUDEntityInterface
         unset($data['formId']);
         $this->baseUnserialize($data);
 
-        $this->startTime = new \DateTime($this->startTime);
-        $this->endTime = new \DateTime($this->endTime);
+        if (!($this->startTime instanceof \DateTime)) {
+            $this->startTime = new \DateTime($this->startTime);
+        }
+        if (!($this->endTime instanceof \DateTime)) {
+            $this->endTime = new \DateTime($this->endTime);
+        }
     }
 }

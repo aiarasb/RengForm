@@ -272,6 +272,8 @@ class Event implements CRUDEntityInterface
     {
         $this->baseUnserialize($data);
 
-        $this->date = new \DateTime($this->date);
+        if (!($this->date instanceof \DateTime)) {
+            $this->date = new \DateTime($this->date);
+        }
     }
 }
