@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Grid, Jumbotron } from 'react-bootstrap';
+import { Route } from 'react-router-dom';
+
+import Home from './components/Home'
+import Events from './components/Events'
+import Forms from './components/Forms'
+import Login from './components/Login'
+import Categories from './components/Categories'
+import Lectures from './components/Lectures'
+import Registrations from './components/Registrations'
+import NavBar from './components/NavBar'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+      <NavBar></NavBar>
+        <Jumbotron>
+          <Grid>
+            <Route exact path="/" component={Home}/>
+            <Route path="/events" component={Events}/>
+            <Route path="/forms" component={Forms}/>
+            <Route path="/categories" component={Categories}/>
+            <Route path="/lectures" component={Lectures}/>
+            <Route path="/registrations" component={Registrations}/>
+            <Route path="/login" component={Login}/>
+          </Grid>
+        </Jumbotron>
       </div>
     );
   }

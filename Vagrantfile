@@ -4,7 +4,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
   config.vm.network "forwarded_port", guest: 80, host: 8000
   config.vm.network "forwarded_port", guest: 30, host: 3000
-  config.vm.synced_folder ".", "/srv", :nfs => true
+  config.vm.synced_folder "./backend", "/srv", :nfs => true
   config.vm.network :private_network, ip: "10.15.10.22"
   config.vm.hostname = "rengform.dev"
 

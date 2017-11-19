@@ -22,6 +22,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
     public function createAction(Request $request, $id)
     {
         $response = new JsonResponse(null, 201);
+        $response->headers->set('Access-Control-Allow-Origin', '*');
 
         if (null === $id) {
             try {
@@ -68,6 +69,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
     public function readAction(Request $request, $id, $sublist)
     {
         $response = new JsonResponse();
+        $response->headers->set('Access-Control-Allow-Origin', '*');
         $response->setStatusCode(200);
 
         if (null === $id) {
@@ -99,6 +101,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
     public function updateAction(Request $request, $id)
     {
         $response = new JsonResponse();
+        $response->headers->set('Access-Control-Allow-Origin', '*');
 
         if (null !== $id) {
             /** @var CRUDEntityInterface $object */
@@ -139,6 +142,7 @@ abstract class AbstractCRUDControllerController extends Controller implements CR
     public function deleteAction(Request $request, $id)
     {
         $response = new JsonResponse(null, 204);
+        $response->headers->set('Access-Control-Allow-Origin', '*');
 
         if (null === $id) {
             $response->setStatusCode(405);
