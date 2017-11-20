@@ -3,8 +3,3 @@ app:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-
-fos_oauth_server_token:
-    path: /token
-    methods: [GET, POST]
-    defaults: { _controller: "fos_oauth_server.controller.token:tokenAction" }

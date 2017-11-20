@@ -17,16 +17,22 @@ function receiveEvents(json) {
 }
 
 export function fetchEvents() {
-  return dispatch => {
+  return (dispatch, getState) => {
+    console.log(getState())
     dispatch(requestEvents())
-    return fetch(`http://rengform.dev/api/events`)
+    return fetch(`http://rengform.dev/api/events`, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + getState().login.loginData.access_token
+      }
+    })
       .then(response => response.json())
       .then(json => dispatch(receiveEvents(json)))
   }
 }
 
 function shouldFetchEvents(state) {
-  if (!state.events || (!state.events.isFetching && state.events.items.length <= 0)) {
+  if (!state.events.items) {
     return true
   } else if (state.events.isFetching) {
     return false

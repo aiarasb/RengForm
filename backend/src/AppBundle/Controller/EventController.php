@@ -50,7 +50,7 @@ class EventController extends AbstractCRUDControllerController
                 /** @var Event $object */
                 return $object->dump();
             },
-            $this->getRepository()->findAll()//findByParentId($this->getUser()->getId())
+            $this->getRepository()->findByParentId($this->getUser()->getId())
         );
 
         $response->setData($objects);

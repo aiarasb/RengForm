@@ -14,11 +14,11 @@ security:
             pattern:    ^/token
             security:   false
 
-#        api:
-#            pattern:    ^/api
-#            fos_oauth:  true
-#            stateless:  true
-#            anonymous:  false
-#
-#    access_control:
-#        - { path: ^/, roles: [ IS_AUTHENTICATED_FULLY ] }
+        api:
+            pattern:    ^/api
+            fos_oauth:  true
+            stateless:  true
+            anonymous:  false
+
+    access_control:
+        - { path: ^/, roles: [ IS_AUTHENTICATED_FULLY ] }
