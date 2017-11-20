@@ -18,7 +18,6 @@ function receiveEvents(json) {
 
 export function fetchEvents() {
   return (dispatch, getState) => {
-    console.log(getState())
     dispatch(requestEvents())
     return fetch(`http://rengform.dev/api/events`, {
       method: 'GET',
