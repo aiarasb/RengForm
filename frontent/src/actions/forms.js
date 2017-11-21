@@ -1,23 +1,22 @@
-export const REQUEST_FORMS = 'REQUEST_FORMS'
-export const RECEIVE_FORMS = 'RECEIVE_FORMS'
+export const REQUEST = 'REQUEST_FORMS'
+export const RECEIVE = 'RECEIVE_FORMS'
 
 function request() {
   return {
-    type: REQUEST_FORMS
+    type: REQUEST
   }
 }
 
 function receive(json) {
   return {
-    type: RECEIVE_FORMS,
-    events: json,
-    receivedAt: Date.now()
+    type: RECEIVE,
+    items: json
   }
 }
 
-export function fetch() {
+export function fetchItems() {
   return (dispatch, getState) => {
-    dispatch(requestEvents())
+    dispatch(request())
     return fetch(`http://rengform.dev/api/forms`, {
       method: 'GET',
       headers: {
@@ -25,24 +24,24 @@ export function fetch() {
       }
     })
       .then(response => response.json())
-      .then(json => dispatch(receiveEvents(json)))
+      .then(json => dispatch(receive(json)))
   }
 }
 
 function shouldFetch(state) {
-  if (!state.events.items) {
+  if (!state.forms.items) {
     return true
-  } else if (state.events.isFetching) {
+  } else if (state.forms.isFetching) {
     return false
   } else {
-    return state.events.didInvalidate
+    return state.forms.didInvalidate
   }
 }
 
 export function fetchIfNeeded() {
   return (dispatch, getState) => {
     if (shouldFetch(getState())) {
-      return dispatch(fetch())
+      return dispatch(fetchItems())
     } else {
       return Promise.resolve()
     }

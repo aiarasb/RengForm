@@ -1,37 +1,33 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
-import Event from './Event'
+import Form from './Form'
 import PropTypes from 'prop-types'
 
-const EventList = ({ events }) => (
+const FormList = ({ forms }) => (
   <div>
     <Table striped bordered condensed hover>
       <thead>
         <tr>
           <th>Pavadinimas</th>
-          <th>Data</th>
-          <th>Vieta</th>
           <th>Aprašymas</th>
         </tr>
       </thead>
       <tbody>
-        {events.map((event, index) => (
-          <Event key={index} {...event} />
+        {forms.map((form, index) => (
+          <Form key={index} {...form} />
         ))}
       </tbody>
     </Table>
   </div>
 )
 
-EventList.propTypes = {
-  events: PropTypes.arrayOf(
+FormList.propTypes = {
+  forms: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired,
-      place: PropTypes.string.isRequired
+      description: PropTypes.string.isRequired
     }).isRequired
   ).isRequired,
 }
 
-export default EventList;
+export default FormList;

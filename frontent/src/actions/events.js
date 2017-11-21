@@ -1,4 +1,5 @@
 export const REQUEST_EVENTS = 'REQUEST_EVENTS'
+export const RECEIVE_EVENTS = 'RECEIVE_EVENTS'
 
 function requestEvents() {
   return {
@@ -6,13 +7,10 @@ function requestEvents() {
   }
 }
 
-export const RECEIVE_EVENTS = 'RECEIVE_EVENTS'
-
 function receiveEvents(json) {
   return {
     type: RECEIVE_EVENTS,
-    events: json,
-    receivedAt: Date.now()
+    items: json
   }
 }
 

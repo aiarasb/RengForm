@@ -22,17 +22,18 @@ class Events extends Component {
       const { events, isFetching } = this.props
     return (
       <div>
-        {isFetching && (!events || events.length === 0) && <h2>Kraunama...</h2>}
-        {!isFetching && (!events || events.length === 0) && <h2>Renginių nėra</h2>}
+        <h2>Renginiai</h2>
+        {isFetching && (!events || events.length === 0) && <h3>Kraunama...</h3>}
+        {!isFetching && (!events || events.length === 0) && <h3>Renginių nėra</h3>}
         {events && events.length > 0 &&
-          <EventList events={events}></EventList>}
+          <EventList events={events}/>}
       </div>
     )
   }
 }
 
 Events.propTypes = {
-  events: PropTypes.array.isRequired,
+  events: PropTypes.array,
   isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired
 }

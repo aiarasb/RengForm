@@ -17,22 +17,30 @@ class AppNavBar extends Component {
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
-          <Nav>
-            <LinkContainer exact to="/events">
-              <NavItem eventKey={2}>Renginiai</NavItem>
-            </LinkContainer>
-            <LinkContainer exact to="/forms">
-              <NavItem eventKey={2}>Formos</NavItem>
-            </LinkContainer>
-          </Nav>
-          <Nav pullRight>
-            {!this.props.loggedIn && <LinkContainer to="/login">
-              <NavItem eventKey={3}>Prisijungti</NavItem>
-            </LinkContainer>}
-            {this.props.loggedIn && <LinkContainer to="/logout">
-              <NavItem eventKey={3}>Atsijungti</NavItem>
-            </LinkContainer>}
-          </Nav>
+          <Navbar.Collapse>
+            {this.props.loggedIn &&
+              <Nav>
+                <LinkContainer exact to="/events">
+                  <NavItem eventKey={2}>Renginiai</NavItem>
+                </LinkContainer>
+                <LinkContainer exact to="/forms">
+                  <NavItem eventKey={2}>Formos</NavItem>
+                </LinkContainer>
+              </Nav>
+            }
+            <Nav pullRight>
+              {!this.props.loggedIn &&
+                <LinkContainer to="/login">
+                  <NavItem eventKey={3}>Prisijungti</NavItem>
+                </LinkContainer>
+              }
+              {this.props.loggedIn &&
+                <LinkContainer to="/logout">
+                  <NavItem eventKey={3}>Atsijungti</NavItem>
+                </LinkContainer>
+              }
+            </Nav>
+          </Navbar.Collapse>
         </Grid>
       </Navbar>
     )

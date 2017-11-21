@@ -39,7 +39,7 @@ class Login extends Component {
       <div className="container">
         <form className="form-signin" onSubmit={this.handleSubmit}>
           <h2 className="form-signin-heading">Prisijunkite</h2>
-          { isLoginPending && <h3>Please wait...</h3> }
+          { isLoginPending && <h3>Jungiamasi...</h3> }
           { isLoginSuccess && <Redirect to="/events"/> }
           { loginError && <h3>{loginError.message}</h3> }
           <FormGroup controlId="username" bsSize="large">

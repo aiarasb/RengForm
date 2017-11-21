@@ -1,7 +1,7 @@
 import {
-  REQUEST_EVENTS,
-  RECEIVE_EVENTS
-} from '../actions/events'
+  REQUEST,
+  RECEIVE
+} from '../actions/forms'
 import {
   LOGOUT
 } from '../actions/login'
@@ -15,12 +15,12 @@ export default function events(
   action
 ) {
   switch (action.type) {
-    case REQUEST_EVENTS:
+    case REQUEST:
       return Object.assign({}, state, {
         isFetching: true,
         didInvalidate: false
       })
-    case RECEIVE_EVENTS:
+    case RECEIVE:
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
