@@ -16,7 +16,7 @@ class Login extends Component {
     }
   }
 
-  validateForm() {
+  validateForm = () => {
     return this.state.username.length > 0 && this.state.password.length > 0
   }
 

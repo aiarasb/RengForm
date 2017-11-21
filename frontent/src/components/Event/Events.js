@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import EventList from './EventList'
-import { fetchEventsIfNeeded } from '../actions/events'
+import EventForm from './EventForm'
+import { fetchEventsIfNeeded } from '../../actions/events'
 import PropTypes from 'prop-types'
 
 class Events extends Component { 
@@ -27,6 +28,7 @@ class Events extends Component {
         {!isFetching && (!events || events.length === 0) && <h3>Renginių nėra</h3>}
         {events && events.length > 0 &&
           <EventList events={events}/>}
+        <EventForm/>
       </div>
     )
   }

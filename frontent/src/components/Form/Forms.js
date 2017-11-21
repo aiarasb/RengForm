@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FormList from './FormList'
-import { fetchIfNeeded } from '../actions/forms'
+import { fetchIfNeeded } from '../../actions/forms'
 import PropTypes from 'prop-types'
 
 class Forms extends Component { 

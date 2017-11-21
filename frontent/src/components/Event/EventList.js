@@ -1,5 +1,5 @@
-import React from 'react';
-import { Table } from 'react-bootstrap';
+import React from 'react'
+import { Table } from 'react-bootstrap'
 import Event from './Event'
 import PropTypes from 'prop-types'
 
@@ -34,4 +34,4 @@ EventList.propTypes = {
   ).isRequired,
 }
 
-export default EventList;
+export default EventList
