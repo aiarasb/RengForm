@@ -1,7 +1,8 @@
-export const SET_LOGIN_PENDING = 'SET_LOGIN_PENDING';
-export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS';
-export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR';
-export const SAVE_LOGIN_DATA = 'SAVE_LOGIN_DATA';
+export const SET_LOGIN_PENDING = 'SET_LOGIN_PENDING'
+export const SET_LOGIN_SUCCESS = 'SET_LOGIN_SUCCESS'
+export const SET_LOGIN_ERROR = 'SET_LOGIN_ERROR'
+export const SAVE_LOGIN_DATA = 'SAVE_LOGIN_DATA'
+export const LOGOUT = 'LOGOUT'
  
 function setLoginPending(isLoginPending) {
   return {
@@ -27,6 +28,8 @@ function setLoginError(loginError) {
 function saveLoginData(loginData) {
   return {
     type: SAVE_LOGIN_DATA,
+    isLoginSuccess: true,
+    isLoginPending: false,
     loginData
   }
 }
@@ -40,18 +43,23 @@ function callLoginApi(username, password, callback) {
 
 export function login(email, password) {
   return dispatch => {
-    dispatch(setLoginPending(true));
-    dispatch(setLoginSuccess(false));
-    dispatch(setLoginError(null));
+    dispatch(setLoginPending(true))
+    dispatch(setLoginSuccess(false))
+    dispatch(setLoginError(null))
 
     callLoginApi(email, password, (error, response) => {
-      dispatch(setLoginPending(false));
       if (!error) {
-        dispatch(setLoginSuccess(true));
         response.then(json => dispatch(saveLoginData(json)))
       } else {
-        dispatch(setLoginError(error));
+        dispatch(setLoginPending(false))
+        dispatch(setLoginError(error))
       }
     });
+  }
+}
+
+export function logout() {
+  return {
+    type: LOGOUT
   }
 }

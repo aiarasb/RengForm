@@ -7,7 +7,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import registerServiceWorker from './registerServiceWorker';
-import rootReducer from './reducers/reducers'
+import rootReducer from './reducers/index'
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';

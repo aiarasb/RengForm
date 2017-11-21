@@ -4,10 +4,10 @@ import { Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import Home from './components/Home'
 import Events from './components/Events'
 import Forms from './components/Forms'
 import Login from './components/Login'
+import Logout from './components/Logout'
 import Categories from './components/Categories'
 import Lectures from './components/Lectures'
 import Registrations from './components/Registrations'
@@ -20,7 +20,6 @@ class App extends Component {
       <NavBar/>
         <Jumbotron>
           <Grid>
-            <Route exact path="/" component={Home}/>
             <Route path="/events" render={() => (
               this.props.loggedIn ? (
                 <Events/>
@@ -35,15 +34,38 @@ class App extends Component {
                 <Redirect to="/login"/>
               )
             )}/>
-            <Route path="/categories" component={Categories}/>
-            <Route path="/lectures" component={Lectures}/>
-            <Route path="/registrations" component={Registrations}/>
+            <Route path="/categories" render={() => (
+              this.props.loggedIn ? (
+                <Categories/>
+              ) : (
+                <Redirect to="/login"/>
+              )
+            )}/>
+            <Route path="/lectures" render={() => (
+              this.props.loggedIn ? (
+                <Lectures/>
+              ) : (
+                <Redirect to="/login"/>
+              )
+            )}/>
+            <Route path="/registrations" render={() => (
+              this.props.loggedIn ? (
+                <Registrations/>
+              ) : (
+                <Redirect to="/login"/>
+              )
+            )}/>
             <Route path="/login" component={Login}/>
+            <Route path="/logout" component={Logout}/>
           </Grid>
         </Jumbotron>
       </div>
     );
   }
+}
+
+App.propTypes = {
+  loggedIn: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => {
@@ -58,4 +80,3 @@ const mapStateToProps = state => {
 }
 
 export default withRouter(connect(mapStateToProps)(App))
-// export default App
