@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import EventList from './EventList'
 import EventForm from './EventForm'
+import Event from './Event'
 import { fetchEventsIfNeeded } from '../../actions/events'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 
 class Events extends Component { 
 
@@ -20,16 +22,23 @@ class Events extends Component {
   }
 
   render() {
-      const { events, isFetching } = this.props
+    const { events, isFetching } = this.props
+
+    if (!this.props.match.params.id) {
+      return (
+        <div>
+          <h2>Renginiai</h2>
+          {isFetching && (!events || events.length === 0) && <h3>Kraunama...</h3>}
+          {!isFetching && (!events || events.length === 0) && <h3>Renginių nėra</h3>}
+          {events && events.length > 0 &&
+            <EventList events={events}/>}
+          <EventForm/>
+        </div>
+      )
+    }
+
     return (
-      <div>
-        <h2>Renginiai</h2>
-        {isFetching && (!events || events.length === 0) && <h3>Kraunama...</h3>}
-        {!isFetching && (!events || events.length === 0) && <h3>Renginių nėra</h3>}
-        {events && events.length > 0 &&
-          <EventList events={events}/>}
-        <EventForm/>
-      </div>
+      <Event id={this.props.match.params.id}/>
     )
   }
 }
@@ -55,4 +64,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Events)
+export default withRouter(connect(mapStateToProps)(Events))

@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import FormList from './FormList'
+import Form from './Form'
 import { fetchIfNeeded } from '../../actions/forms'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 
 class Forms extends Component { 
 
@@ -19,15 +21,21 @@ class Forms extends Component {
   }
 
   render() {
-      const { forms, isFetching } = this.props
+    const { forms, isFetching } = this.props
+    if (!this.props.match.params.id) {
+      return (
+        <div>
+          <h2>Formos</h2>
+          {isFetching && (!forms || forms.length === 0) && <h2>Kraunama...</h2>}
+          {!isFetching && (!forms || forms.length === 0) && <h2>Formų nėra</h2>}
+          {forms && forms.length > 0 &&
+            <FormList forms={forms}/>}
+        </div>
+      )
+    }
+
     return (
-      <div>
-        <h2>Formos</h2>
-        {isFetching && (!forms || forms.length === 0) && <h2>Kraunama...</h2>}
-        {!isFetching && (!forms || forms.length === 0) && <h2>Formų nėra</h2>}
-        {forms && forms.length > 0 &&
-          <FormList forms={forms}/>}
-      </div>
+      <Form id={this.props.match.params.id}/>
     )
   }
 }
@@ -53,4 +61,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Forms)
+export default withRouter(connect(mapStateToProps)(Forms))

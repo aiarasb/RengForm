@@ -7,10 +7,11 @@ import PropTypes from 'prop-types'
 import Events from './components/Event/Events'
 import Forms from './components/Form/Forms'
 import Login from './components/Login'
+import Category from './components/Category/Category'
+import Lectures from './components/Lecture/Lectures'
+import Registrations from './components/Registration/Registrations'
+import Home from './components/Home'
 import Logout from './components/Logout'
-import Categories from './components/Categories'
-import Lectures from './components/Lectures'
-import Registrations from './components/Registrations'
 import NavBar from './components/NavBar'
 
 class App extends Component {
@@ -20,35 +21,36 @@ class App extends Component {
       <NavBar/>
         <Jumbotron>
           <Grid>
-            <Route path="/events" render={() => (
+            <Route exact path="/" component={Home}/>
+            <Route path="/events/:id?" render={() => (
               this.props.loggedIn ? (
                 <Events/>
               ) : (
                 <Redirect to="/login"/>
               )
             )}/>
-            <Route path="/forms" render={() => (
+            <Route path="/forms/:id?" render={() => (
               this.props.loggedIn ? (
                 <Forms/>
               ) : (
                 <Redirect to="/login"/>
               )
             )}/>
-            <Route path="/categories" render={() => (
+            <Route path="/categories/:id" render={() => (
               this.props.loggedIn ? (
-                <Categories/>
+                <Category/>
               ) : (
                 <Redirect to="/login"/>
               )
             )}/>
-            <Route path="/lectures" render={() => (
+            <Route path="/lectures/:id" render={() => (
               this.props.loggedIn ? (
                 <Lectures/>
               ) : (
                 <Redirect to="/login"/>
               )
             )}/>
-            <Route path="/registrations" render={() => (
+            <Route path="/registrations/:id" render={() => (
               this.props.loggedIn ? (
                 <Registrations/>
               ) : (

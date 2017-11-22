@@ -13,7 +13,7 @@ class AppNavBar extends Component {
         <Grid>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/events">RengForm</Link>
+              <Link to="/">RengForm</Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>

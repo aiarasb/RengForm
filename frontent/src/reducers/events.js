@@ -14,7 +14,6 @@ export default function events(
   },
   action
 ) {
-  console.log(action.items);
   switch (action.type) {
     case REQUEST_EVENTS:
       return Object.assign({}, state, {

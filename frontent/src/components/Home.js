@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class Categories extends Component {
+class Home extends Component {
   render() {
     return (
       <div>
-        <h2>Kategorijos</h2>
+        <h2>Titulinis</h2>
       </div>
     );
   }
 } 
 
-export default Categories;
+export default Home;
