@@ -17,6 +17,7 @@ AppBundle\Entity\Registration:
     manyToOne:
         lecture:
             targetEntity: AppBundle\Entity\Lecture
+            inversedBy: registrations
             joinColumn:
                 name: lectureId
                 referencedColumnName: id

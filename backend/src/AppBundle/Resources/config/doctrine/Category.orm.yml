@@ -20,6 +20,7 @@ AppBundle\Entity\Category:
     manyToOne:
         event:
             targetEntity: AppBundle\Entity\Event
+            inversedBy: categories
             joinColumn:
                 name: eventId
                 referencedColumnName: id

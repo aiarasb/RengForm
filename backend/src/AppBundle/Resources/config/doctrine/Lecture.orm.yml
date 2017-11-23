@@ -37,6 +37,7 @@ AppBundle\Entity\Lecture:
     manyToOne:
         category:
             targetEntity: AppBundle\Entity\Category
+            inversedBy: lectures
             joinColumn:
                 name: categoryId
                 referencedColumnName: id
@@ -48,4 +49,4 @@ AppBundle\Entity\Lecture:
     oneToMany:
         registrations:
             targetEntity: AppBundle\Entity\Registration
-            mappedBy: event
+            mappedBy: lecture

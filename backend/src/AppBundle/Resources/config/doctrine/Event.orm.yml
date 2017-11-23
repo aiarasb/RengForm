@@ -27,6 +27,7 @@ AppBundle\Entity\Event:
     manyToOne:
         owner:
             targetEntity: AppBundle\Entity\User
+            inversedBy: events
             joinColumn:
                 name: userId
                 referencedColumnName: id

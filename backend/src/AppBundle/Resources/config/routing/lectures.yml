@@ -3,6 +3,11 @@ lecture_create:
     methods: POST
     defaults: { _controller: "AppBundle:Lecture:create", id: null }
 
+lecture_render:
+    path: /{id}/render_form
+    methods: GET
+    defaults: { _controller: "AppBundle:Lecture:renderForm" }
+
 lecture_read:
     path: /{id}/{sublist}
     methods: GET

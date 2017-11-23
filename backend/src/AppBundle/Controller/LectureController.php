@@ -7,7 +7,9 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\Form;
 use AppBundle\Entity\Lecture;
 use AppBundle\Entity\Registration;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class LectureController
@@ -15,6 +17,32 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class LectureController extends AbstractCRUDControllerController
 {
     const TYPE = 'lecture';
+
+    /**
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function renderFormAction($id)
+    {
+        /** @var Lecture $lecture */
+        $lecture = $this->getRepository()->find($id);
+
+        if (null === $lecture) {
+            return new Response('', 404);
+        }
+
+        $formEnt = $lecture->getForm();
+
+        /** @var FormInterface $form */
+        $form = $this->get('AppBundle\Service\Form\Builder')->buildForm($formEnt->getConfig());
+
+        return $this->render(
+            '@App/form.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
+    }
 
     /**
      * @return LectureRepository
