@@ -52,7 +52,7 @@ class CategoryForm extends Component {
   render() {
     return (
       <div>
-        <Button onClick={this.open}>Nauja kategorija</Button>
+        <Button bsStyle="primary" onClick={this.open}>Nauja kategorija</Button>
 
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
@@ -88,7 +88,7 @@ class CategoryForm extends Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.handleSubmit}>Sukurti</Button>
+            <Button bsStyle="primary" onClick={this.handleSubmit}>Sukurti</Button>
             <Button onClick={this.close}>Atšaukti</Button>
           </Modal.Footer>
         </Modal>

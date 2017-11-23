@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Jumbotron } from 'react-bootstrap'
+import { Grid } from 'react-bootstrap'
 import { Route, Redirect, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -8,8 +8,7 @@ import Events from './components/Event/Events'
 import Forms from './components/Form/Forms'
 import Login from './components/Login'
 import Category from './components/Category/Category'
-import Lectures from './components/Lecture/Lectures'
-import Registrations from './components/Registration/Registrations'
+import Lecture from './components/Lecture/Lecture'
 import Home from './components/Home'
 import Logout from './components/Logout'
 import NavBar from './components/NavBar'
@@ -18,8 +17,10 @@ class App extends Component {
   render() {
     return (
       <div>
-      <NavBar/>
-        <Jumbotron>
+        <header>
+          <NavBar/>
+        </header>
+        <main role="main" className="container" style={{padding: "60px 15px 0"}}>
           <Grid>
             <Route exact path="/" component={Home}/>
             <Route path="/events/:id?" render={() => (
@@ -45,14 +46,7 @@ class App extends Component {
             )}/>
             <Route path="/lectures/:id" render={() => (
               this.props.loggedIn ? (
-                <Lectures/>
-              ) : (
-                <Redirect to="/login"/>
-              )
-            )}/>
-            <Route path="/registrations/:id" render={() => (
-              this.props.loggedIn ? (
-                <Registrations/>
+                <Lecture/>
               ) : (
                 <Redirect to="/login"/>
               )
@@ -60,7 +54,13 @@ class App extends Component {
             <Route path="/login" component={Login}/>
             <Route path="/logout" component={Logout}/>
           </Grid>
-        </Jumbotron>
+        </main>
+        <footer className="footer">
+          <div className="container">
+            <span className="text-muted">RengForm 2017</span>
+            <embed className="pull-right" style={{ width: 'auto', height: 60 }} type="image/svg+xml" src="skyline.svg" />
+          </div>
+        </footer>
       </div>
     );
   }

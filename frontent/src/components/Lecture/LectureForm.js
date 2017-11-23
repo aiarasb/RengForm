@@ -87,7 +87,7 @@ class LectureForm extends Component {
     const { forms, isFetching } = this.props
     return (
       <div>
-        <Button onClick={this.open}>Naujas Užsiėmimas</Button>
+        <Button bsStyle="primary" onClick={this.open}>Naujas Užsiėmimas</Button>
 
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
@@ -192,7 +192,7 @@ class LectureForm extends Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={this.handleSubmit}>Sukurti</Button>
+            <Button bsStyle="primary" onClick={this.handleSubmit}>Sukurti</Button>
             <Button onClick={this.close}>Atšaukti</Button>
           </Modal.Footer>
         </Modal>

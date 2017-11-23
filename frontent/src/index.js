@@ -9,8 +9,7 @@ import thunkMiddleware from 'redux-thunk'
 import registerServiceWorker from './registerServiceWorker';
 import rootReducer from './reducers/index'
 
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-theme.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 
 const loggerMiddleware = createLogger()
