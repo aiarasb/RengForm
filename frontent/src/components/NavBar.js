@@ -13,7 +13,7 @@ class AppNavBar extends Component {
         <Grid>
           <Navbar.Header>
             <Navbar.Brand>
-              <Link to="/">RengForm</Link>
+              <Link to="/" style={{fontFamily: 'Lobster'}}>RengForm</Link>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
