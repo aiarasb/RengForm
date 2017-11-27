@@ -28,6 +28,18 @@ export function create(event) {
   }
 }
 
+export function remove(event) {
+  return (dispatch, getState) => {
+    return fetch(`http://rengform.dev/api/events/` + event.id, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer ' + getState().login.loginData.access_token
+      }
+    })
+      .then(response => { dispatch(fetchEvents()) })
+  }
+}
+
 export function fetchEvents() {
   return (dispatch, getState) => {
     dispatch(requestEvents())

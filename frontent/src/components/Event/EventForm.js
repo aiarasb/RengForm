@@ -29,6 +29,8 @@ class EventForm extends Component {
 
   open = () => {
     this.setState({ showModal: true });
+    const {event} = this.props
+    console.log(event)
   }
 
   handleChange = event => {
@@ -129,7 +131,8 @@ class EventForm extends Component {
 }
 
 EventForm.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  event: PropTypes.object
 }
 
 export default connect()(EventForm)

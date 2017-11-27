@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types' 
-import { withRouter } from 'react-router-dom'
-import { Col, Panel, Row } from 'react-bootstrap'
+import { withRouter, Redirect } from 'react-router-dom'
+import { Col, Panel, Row, Button } from 'react-bootstrap'
 import RegistrationList from '../Registration/RegistrationList'
 import { fetchIfNeeded } from '../../actions/registrations'
+import { remove } from '../../actions/lectures'
 import _ from 'lodash'
 
 class Lecture extends Component {
+  state = {
+    navigate: false
+  }
 
   componentDidMount() {
     const { dispatch, lecture } = this.props
@@ -21,15 +25,27 @@ class Lecture extends Component {
     }
   }
 
+  delete = () => {
+    const { dispatch, lecture } = this.props
+    dispatch(remove(lecture))
+    this.setState({navigate: true})
+  }
+
   render() {
-    const { title, description, place, startTime, endTime, capacity } = this.props.lecture
+    const { title, description, place, startTime, endTime, capacity, category } = this.props.lecture
     const { registrations, isFetching } = this.props
     const header = (<h3>{title}</h3>)
+    const { navigate } = this.state
+
+    if (navigate) {
+      return <Redirect to={"/categories/"+category.id} push={true} />
+    }
+
     return (
       <div>
         <Row>
           <Col md={4}>
-            <Panel header={header}>
+            <Panel header={header} footer={(<Button bsStyle="danger" onClick={this.delete}>Pašalinti Užsiėmimą</Button>)}>
               <div>Vieta: {place}</div>
               <div>Pradžia: {startTime}</div>
               <div>Pabaiga: {endTime}</div>

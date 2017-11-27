@@ -30,6 +30,18 @@ export function create(item) {
   }
 }
 
+export function remove(item) {
+  return (dispatch, getState) => {
+    const eventId = item.event.id
+    return fetch(`http://rengform.dev/api/categories/` + item.id, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer ' + getState().login.loginData.access_token
+      }
+    })
+      .then(response => { dispatch(fetchItems(eventId)) })
+  }
+}
 
 export function fetchItems(eventId) {
   return (dispatch, getState) => {
