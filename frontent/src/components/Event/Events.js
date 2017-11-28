@@ -6,6 +6,7 @@ import Event from './Event'
 import { fetchEventsIfNeeded } from '../../actions/events'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
 
 class Events extends Component { 
 
@@ -21,6 +22,10 @@ class Events extends Component {
     }
   }
 
+  openForm = () => {
+    this.refs.formModal.getWrappedInstance().open()
+  }
+
   render() {
     const { events, isFetching } = this.props
 
@@ -32,7 +37,8 @@ class Events extends Component {
           {!isFetching && (!events || events.length === 0) && <h3>Renginių nėra</h3>}
           {events && events.length > 0 &&
             <EventList events={events}/>}
-          <EventForm/>
+          <Button bsStyle="primary" onClick={this.openForm}>Naujas renginys</Button>
+          <EventForm ref="formModal"/>
         </div>
       )
     }

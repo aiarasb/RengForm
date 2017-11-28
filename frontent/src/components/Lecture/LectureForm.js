@@ -3,7 +3,6 @@ import { Button, Modal, FormGroup, FormControl, ControlLabel, Form, Col } from '
 import { create } from '../../actions/lectures'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 import { fetchIfNeeded } from '../../actions/forms'
 
 class LectureForm extends Component {
@@ -87,8 +86,6 @@ class LectureForm extends Component {
     const { forms, isFetching } = this.props
     return (
       <div>
-        <Button bsStyle="primary" onClick={this.open}>Naujas Užsiėmimas</Button>
-
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
             <Modal.Title>Nauja Užsiėmimas</Modal.Title>
@@ -223,4 +220,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(LectureForm));
+export default connect(mapStateToProps, null, null, { withRef: true })(LectureForm)

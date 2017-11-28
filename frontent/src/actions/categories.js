@@ -1,6 +1,5 @@
 export const REQUEST = 'REQUEST_CATEGORIES'
 export const RECEIVE = 'RECEIVE_CATEGORIES'
-export const CREATE = 'CREATE_CATEGORY'
 
 function request(eventId) {
   return {
@@ -21,6 +20,19 @@ export function create(item) {
   return (dispatch, getState) => {
     return fetch(`http://rengform.dev/api/categories`, {
       method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + getState().login.loginData.access_token
+      },
+      body: JSON.stringify(item)
+    })
+      .then(response => { dispatch(fetchItems(item.eventId)) })
+  }
+}
+
+export function update(item, categoryId) {
+  return (dispatch, getState) => {
+    return fetch(`http://rengform.dev/api/categories/`+categoryId, {
+      method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token
       },

@@ -1,6 +1,5 @@
 export const REQUEST_EVENTS = 'REQUEST_EVENTS'
 export const RECEIVE_EVENTS = 'RECEIVE_EVENTS'
-export const CREATE = 'CREATE_EVENT'
 
 function requestEvents() {
   return {
@@ -19,6 +18,19 @@ export function create(event) {
   return (dispatch, getState) => {
     return fetch(`http://rengform.dev/api/events`, {
       method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + getState().login.loginData.access_token
+      },
+      body: JSON.stringify(event)
+    })
+      .then(response => { dispatch(fetchEvents()) })
+  }
+}
+
+export function update(event, eventId) {
+  return (dispatch, getState) => {
+    return fetch(`http://rengform.dev/api/events/`+eventId, {
+      method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token
       },

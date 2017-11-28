@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types' 
 import { withRouter, Redirect } from 'react-router-dom'
-import { Col, Panel, Row, Button } from 'react-bootstrap'
+import { Col, Panel, Row, Button, ButtonGroup } from 'react-bootstrap'
 import LectureList from '../Lecture/LectureList'
 import LectureForm from '../Lecture/LectureForm'
+import CategoryForm from '../Category/CategoryForm'
 import { fetchIfNeeded } from '../../actions/lectures'
 import { remove } from '../../actions/categories'
 import _ from 'lodash'
@@ -32,6 +33,14 @@ class Category extends Component {
     this.setState({navigate: true})
   }
 
+  openForm = () => {
+    this.refs.formModal.getWrappedInstance().open()
+  }
+
+  openLectureForm = () => {
+    this.refs.lectureFormModal.getWrappedInstance().open()
+  }
+
   render() {
     const { id, title, description, event } = this.props.category
     const { lectures, isFetching } = this.props
@@ -46,12 +55,19 @@ class Category extends Component {
       <div>
         <Row>
           <Col md={4}>
-            <Panel header={header} footer={(<Button bsStyle="danger" onClick={this.delete}>Pašalinti kategoriją</Button>)}>
+            <Panel header={header} footer={(
+              <div>
+                <ButtonGroup>
+                  <Button bsStyle="primary" onClick={this.openForm}>Redaguoti</Button>
+                  <Button bsStyle="danger" onClick={this.delete}>Pašalinti</Button>
+                </ButtonGroup>
+              </div>
+            )}>
               <div>{description}</div>
             </Panel>
           </Col>
           <Col md={8}>
-            <Panel header={(<h3>Užsiėmimai</h3>)} footer={(<LectureForm categoryId={id}/>)}>
+            <Panel header={(<h3>Užsiėmimai</h3>)} footer={(<Button bsStyle="primary" onClick={this.openLectureForm}>Naujas Užsiėmimas</Button>)}>
               {isFetching && (!lectures || lectures.length === 0) && <h3>Kraunama...</h3>}
               {!isFetching && (!lectures || lectures.length === 0) && <h3>Užsiėmimų nėra</h3>}
               {lectures && lectures.length > 0 &&
@@ -59,6 +75,8 @@ class Category extends Component {
             </Panel>
           </Col>
         </Row>
+        <CategoryForm eventId={this.props.category.event.id} category={this.props.category} ref="formModal"/>
+        <LectureForm categoryId={id} ref="lectureFormModal"/>
       </div>
     )
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types' 
 import { withRouter, Redirect } from 'react-router-dom'
-import { Col, Panel, Row, Button } from 'react-bootstrap'
+import { Col, Panel, Row, Button, ButtonGroup } from 'react-bootstrap'
 import CategoryList from '../Category/CategoryList'
 import CategoryForm from '../Category/CategoryForm'
 import EventForm from './EventForm'
@@ -33,6 +33,14 @@ class Event extends Component {
     this.setState({navigate: true})
   }
 
+  openForm = () => {
+    this.refs.formModal.getWrappedInstance().open()
+  }
+
+  openCategoryForm = () => {
+    this.refs.categoryFormModal.getWrappedInstance().open()
+  }
+
   render() {
     const { id, title, description, date, place } = this.props.event
     const { categories, isFetching } = this.props
@@ -49,8 +57,10 @@ class Event extends Component {
           <Col md={4}>
             <Panel header={header} footer={(
               <div>
-                <EventForm event={this.props.event}/>
-                <Button bsStyle="danger" onClick={this.delete}>Pašalinti</Button>
+                <ButtonGroup>
+                  <Button bsStyle="primary" onClick={this.openForm}>Redaguoti</Button>
+                  <Button bsStyle="danger" onClick={this.delete}>Pašalinti</Button>
+                </ButtonGroup>
               </div>
             )}>
               <div>Vieta: {place}</div>
@@ -59,7 +69,7 @@ class Event extends Component {
             </Panel>
           </Col>
           <Col md={8}>
-            <Panel header={(<h3>Katogorijos</h3>)} footer={(<CategoryForm eventId={id}/>)}>
+            <Panel header={(<h3>Katogorijos</h3>)} footer={(<Button bsStyle="primary" onClick={this.openCategoryForm}>Nauja kategorija</Button>)}>
               {isFetching && (!categories || categories.length === 0) && <h3>Kraunama...</h3>}
               {!isFetching && (!categories || categories.length === 0) && <h3>Kategorijų nėra</h3>}
               {categories && categories.length > 0 &&
@@ -67,6 +77,8 @@ class Event extends Component {
             </Panel>
           </Col>
         </Row>
+        <EventForm event={this.props.event} ref="formModal"/>
+        <CategoryForm eventId={id} ref="categoryFormModal"/>
       </div>
     )
   }

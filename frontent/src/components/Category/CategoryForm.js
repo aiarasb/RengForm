@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Modal, FormGroup, FormControl, ControlLabel, Form, Col } from 'react-bootstrap'
-import { create } from '../../actions/categories'
+import { create, update } from '../../actions/categories'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -24,7 +24,12 @@ class CategoryForm extends Component {
   }
 
   open = () => {
-    this.setState({ showModal: true });
+    const { category } = this.props
+    this.setState({
+      showModal: true,
+      category_title: category ? category.title : "",
+      category_description: category ? category.description : ""
+    });
   }
 
   handleChange = event => {
@@ -35,25 +40,30 @@ class CategoryForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const { dispatch, eventId } = this.props
+    const { dispatch, eventId, category } = this.props
     const { 
       category_title,
       category_description
      } = this.state
-    const category = {
+
+    const newCategory = {
       title: category_title,
       description: category_description,
       eventId: eventId
     }
-    dispatch(create(category))
+
+    if (category) {
+      dispatch(update(newCategory, category.id))
+    } else {
+      dispatch(create(newCategory))
+    }
+
     this.close()
   }
 
   render() {
     return (
       <div>
-        <Button bsStyle="primary" onClick={this.open}>Nauja kategorija</Button>
-
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
             <Modal.Title>Nauja kategorija</Modal.Title>
@@ -88,7 +98,7 @@ class CategoryForm extends Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button bsStyle="primary" onClick={this.handleSubmit}>Sukurti</Button>
+            <Button bsStyle="primary" onClick={this.handleSubmit}>Saugoti</Button>
             <Button onClick={this.close}>Atšaukti</Button>
           </Modal.Footer>
         </Modal>
@@ -99,7 +109,8 @@ class CategoryForm extends Component {
 
 CategoryForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  eventId: PropTypes.number.isRequired
+  eventId: PropTypes.number.isRequired,
+  category: PropTypes.object
 }
 
-export default connect()(CategoryForm)
+export default connect(null, null, null, { withRef: true })(CategoryForm)

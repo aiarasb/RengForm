@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Modal, FormGroup, FormControl, ControlLabel, Form, Col } from 'react-bootstrap'
-import { create } from '../../actions/events'
+import { create, update } from '../../actions/events'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -28,9 +28,14 @@ class EventForm extends Component {
   }
 
   open = () => {
-    this.setState({ showModal: true });
     const {event} = this.props
-    console.log(event)
+    this.setState({
+      showModal: true,
+      event_title: event ? event.title : "",
+      event_place: event ? event.place : "",
+      event_date: event ? event.date : "",
+      event_description: event ? event.description : ""
+    });
   }
 
   handleChange = event => {
@@ -41,28 +46,32 @@ class EventForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const { dispatch } = this.props
+    const { dispatch, event } = this.props
     const { 
       event_title,
       event_place,
       event_date,
       event_description
      } = this.state
-    const event = {
+
+    const newEvent = {
       title: event_title,
       place: event_place,
       date: event_date,
       description: event_description
     }
-    dispatch(create(event))
+
+    if (event) {
+      dispatch(update(newEvent, event.id))
+    } else {
+      dispatch(create(newEvent))
+    }
     this.close()
   }
 
   render() {
     return (
       <div>
-        <Button bsStyle="primary" onClick={this.open}>Naujas renginys</Button>
-
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
             <Modal.Title>Naujas renginys</Modal.Title>
@@ -121,7 +130,7 @@ class EventForm extends Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button bsStyle="primary" onClick={this.handleSubmit}>Sukurti</Button>
+            <Button bsStyle="primary" onClick={this.handleSubmit}>Saugoti</Button>
             <Button onClick={this.close}>Atšaukti</Button>
           </Modal.Footer>
         </Modal>
@@ -135,4 +144,4 @@ EventForm.propTypes = {
   event: PropTypes.object
 }
 
-export default connect()(EventForm)
+export default connect(null, null, null, { withRef: true })(EventForm)
