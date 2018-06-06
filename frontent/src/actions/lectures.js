@@ -19,7 +19,7 @@ function receive(categoryId, json) {
 
 export function create(item) {
   return (dispatch, getState) => {
-    return fetch(`http://rengform.dev/api/lectures`, {
+    return fetch(`http://rengform.test/api/lectures`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token
@@ -33,7 +33,7 @@ export function create(item) {
 export function remove(item) {
   return (dispatch, getState) => {
     const categoryId = item.category.id
-    return fetch(`http://rengform.dev/api/lectures/` + item.id, {
+    return fetch(`http://rengform.test/api/lectures/` + item.id, {
       method: 'DELETE',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token
@@ -46,7 +46,7 @@ export function remove(item) {
 export function fetchItems(categoryId) {
   return (dispatch, getState) => {
     dispatch(request(categoryId))
-    return fetch(`http://rengform.dev/api/categories/`+categoryId+`/lectures`, {
+    return fetch(`http://rengform.test/api/categories/`+categoryId+`/lectures`, {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token

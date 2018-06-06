@@ -16,7 +16,7 @@ function receiveEvents(json) {
 
 export function create(event) {
   return (dispatch, getState) => {
-    return fetch(`http://rengform.dev/api/events`, {
+    return fetch(`http://rengform.test/api/events`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token
@@ -29,7 +29,7 @@ export function create(event) {
 
 export function update(event, eventId) {
   return (dispatch, getState) => {
-    return fetch(`http://rengform.dev/api/events/`+eventId, {
+    return fetch(`http://rengform.test/api/events/`+eventId, {
       method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token
@@ -42,7 +42,7 @@ export function update(event, eventId) {
 
 export function remove(event) {
   return (dispatch, getState) => {
-    return fetch(`http://rengform.dev/api/events/` + event.id, {
+    return fetch(`http://rengform.test/api/events/` + event.id, {
       method: 'DELETE',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token
@@ -55,7 +55,7 @@ export function remove(event) {
 export function fetchEvents() {
   return (dispatch, getState) => {
     dispatch(requestEvents())
-    return fetch(`http://rengform.dev/api/events`, {
+    return fetch(`http://rengform.test/api/events`, {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token

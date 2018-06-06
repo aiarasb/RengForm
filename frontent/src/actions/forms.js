@@ -17,7 +17,7 @@ function receive(json) {
 export function fetchItems() {
   return (dispatch, getState) => {
     dispatch(request())
-    return fetch(`http://rengform.dev/api/forms`, {
+    return fetch(`http://rengform.test/api/forms`, {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token

@@ -19,7 +19,7 @@ function receive(lectureId, json) {
 export function fetchItems(lectureId) {
   return (dispatch, getState) => {
     dispatch(request(lectureId))
-    return fetch(`http://rengform.dev/api/lectures/`+lectureId+`/registrations`, {
+    return fetch(`http://rengform.dev/test/lectures/`+lectureId+`/registrations`, {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token

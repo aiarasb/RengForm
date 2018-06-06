@@ -18,7 +18,7 @@ function receive(eventId, json) {
 
 export function create(item) {
   return (dispatch, getState) => {
-    return fetch(`http://rengform.dev/api/categories`, {
+    return fetch(`http://rengform.test/api/categories`, {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token
@@ -31,7 +31,7 @@ export function create(item) {
 
 export function update(item, categoryId) {
   return (dispatch, getState) => {
-    return fetch(`http://rengform.dev/api/categories/`+categoryId, {
+    return fetch(`http://rengform.test/api/categories/`+categoryId, {
       method: 'PUT',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token
@@ -45,7 +45,7 @@ export function update(item, categoryId) {
 export function remove(item) {
   return (dispatch, getState) => {
     const eventId = item.event.id
-    return fetch(`http://rengform.dev/api/categories/` + item.id, {
+    return fetch(`http://rengform.test/api/categories/` + item.id, {
       method: 'DELETE',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token
@@ -58,7 +58,7 @@ export function remove(item) {
 export function fetchItems(eventId) {
   return (dispatch, getState) => {
     dispatch(request(eventId))
-    return fetch(`http://rengform.dev/api/events/`+eventId+`/categories`, {
+    return fetch(`http://rengform.test/api/events/`+eventId+`/categories`, {
       method: 'GET',
       headers: {
         'Authorization': 'Bearer ' + getState().login.loginData.access_token

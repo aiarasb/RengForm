@@ -35,7 +35,7 @@ function saveLoginData(loginData) {
 }
 
 function callLoginApi(username, password, callback) {
-  let response = fetch(`http://rengform.dev/token?grant_type=password&client_id=4_5g2kkmt2w6g4oc4oowsc4kgo4sowkow4k40gc000wk40o4kgs8&client_secret=4ymbwysmzvcw8ows48cwo8gg8gc8gggw4sw0c8gkgggkwswwkw&username=`+username+`&password=`+password)
+  let response = fetch(`http://rengform.test/token?grant_type=password&client_id=4_5g2kkmt2w6g4oc4oowsc4kgo4sowkow4k40gc000wk40o4kgs8&client_secret=4ymbwysmzvcw8ows48cwo8gg8gc8gggw4sw0c8gkgggkwswwkw&username=`+username+`&password=`+password)
       .then(response => response.json())
 
   return callback(null, response)
